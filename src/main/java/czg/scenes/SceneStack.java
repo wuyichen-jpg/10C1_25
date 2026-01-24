@@ -73,7 +73,12 @@ public class SceneStack extends JPanel {
      * {@code true} ist, werden nicht beachtet.
      */
     public void update() {
-        scenes.stream()
+        // Es wird mit einer Kopie der scenes-Liste gearbeitet, da diese
+        // sich ändern kann (z.B. durch Code in den update()-Methoden von
+        // Objekten), während sie hier eigentlich noch durchlaufen wird.
+        // Würde hier die scenes-Liste direkt benutzt werden, könnte es
+        // so zu einer ConcurrentModificationException kommen!
+        new ArrayList<>(scenes).stream()
                 .filter(scene -> !(scene.isCovered && scene.coverPausesLogic))
                 .forEach(BaseScene::update);
     }
