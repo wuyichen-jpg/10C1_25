@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lehrer extends NPC {
+public class Lehrer extends ExamplePlayerObject {
     int hp;
     String fachschaft;
     List<Integer> items = new ArrayList<>();
