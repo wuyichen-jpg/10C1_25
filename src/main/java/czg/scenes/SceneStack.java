@@ -178,6 +178,18 @@ public class SceneStack extends JPanel {
         System.err.printf("Es wurde versucht, %s aus dem Szenen-Stapel zu entfernen, obwohl diese Szene nicht darin vorkommt%n", toBeRemoved);
     }
 
+
+    /**
+     * setzt {@link BaseScene#isCovered} für alle Szenen im Stapel auf {@code false},
+     * leert den {@link #overlyingTagsCache} und entfernt alle Szenen vom Stapel.
+     */
+    public void clear() {
+        scenes.forEach(scene -> scene.isCovered = false);
+        overlyingTagsCache.clear();
+        scenes.clear();
+    }
+
+
     /**
      * Szene ganz oben auf dem Stapel abfragen
      * @return Szene oben auf dem Stapel
