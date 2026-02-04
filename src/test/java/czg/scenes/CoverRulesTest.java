@@ -3,12 +3,12 @@ package czg.scenes;
 import czg.scenes.cover_settings.CoverSettings;
 import czg.scenes.cover_settings.Rules;
 import czg.scenes.cover_settings.Setting;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CoverRulesTest {
 
