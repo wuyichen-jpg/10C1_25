@@ -22,7 +22,7 @@ public final class CoverSettings {
     /**
      * Cache für {@link #getEffectiveRules(SequencedSet)}
      */
-    private final SequencedMap<Integer, Rules> effectiveRulesCache = new LinkedHashMap<>();
+    private final SequencedMap<SequencedSet<String>, Rules> effectiveRulesCache = new LinkedHashMap<>();
 
     /**
      * Standardeinstellungen
@@ -58,12 +58,16 @@ public final class CoverSettings {
      * @param tags Szenen-Tags, bei denen diese Einstellungen angewendet werden sollen
      * @return Das {@code CoverSettings}-Objekt selbst, sodass weitere {@code addRule()}-Aufrufe verkettet werden können
      */
-    public CoverSettings addRules(Rules rules, String... tags) {
+    public CoverSettings setRules(Rules rules, String... tags) {
         // Regeln eintragen
         Arrays.stream(tags).forEach(tag -> this.rules.put(tag, rules));
-        // Cache leeren, da sich der effektive Regelsatz verändert haben kann
-        effectiveRulesCache.clear();
-        // Das CoverSettings-Objekt zurückgeben, um verkettete addRules()-Aufrufe zu erlauben
+        // Alle Cache-Einträge löschen, in deren Tag-Kombination einer der gegebenen Tags vorkommt
+        Set<String> tagSet = Set.of(tags);
+        effectiveRulesCache.keySet().stream()
+                .filter(cachedTagSet -> cachedTagSet.stream().anyMatch(tagSet::contains))
+                .toList()
+                .forEach(effectiveRulesCache::remove);
+        // Das CoverSettings-Objekt zurückgeben, um verkettete setRules()-Aufrufe zu erlauben
         return this;
     }
 
@@ -74,11 +78,9 @@ public final class CoverSettings {
      * @return Den effektiven Regelsatz
      */
     public Rules getEffectiveRules(SequencedSet<String> tags) {
-        int cacheKey = Arrays.hashCode(tags.toArray(String[]::new));
-
         // Ggf. Cache-Eintrag zurückgeben
-        if(effectiveRulesCache.containsKey(cacheKey)) {
-            return effectiveRulesCache.get(cacheKey);
+        if(effectiveRulesCache.containsKey(tags)) {
+            return effectiveRulesCache.get(tags);
         }
 
 
@@ -93,7 +95,7 @@ public final class CoverSettings {
 
 
         // Cache-Eintrag hinzufügen
-        effectiveRulesCache.put(cacheKey, result);
+        effectiveRulesCache.put(tags, result);
         // Cache-Größe einhalten
         while(effectiveRulesCache.size() > MAX_CACHE_SIZE) {
             effectiveRulesCache.pollFirstEntry();
