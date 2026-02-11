@@ -4,49 +4,48 @@
  */
 package czg.scenes;
 
+import static czg.MainWindow.HEIGHT;
 import czg.objects.BackdropObject;
 import czg.objects.ButtonObject;
 import czg.util.Images;
 
 /**
  *
- * @author guest-zmpzia
+ * @author guest-ku1dtt
  */
-public class MathegangScene extends BaseScene{
-    public MathegangScene(){
-        objects.add(new  BackdropObject(Images.get("/assets/background/Mathegang.png")));
+public class FoyerScene extends BaseScene{
+    public FoyerScene(){
+        objects.add(new BackdropObject(Images.get("/assets/background/Foyer.png")));
         
-        /*
         ButtonObject rechts = new ButtonObject(
                 Images.get("/assets/background/PfeilRechts.png"),
                 () -> {
-                    Scene mathe = new MathegangScene();
-                    
+                    GangHausmeisterScene hausm = new GangHausmeisterScene();
+                    /*
                     this.objects.remove(ExamplePlayerObject.INSTANCE);
-                    mathe.objects.add(ExamplePlayerObject.INSTANCE);
-                    
-                    SceneStack.INSTANCE.replace(this, mathe);
+                    hausm.objects.add(ExamplePlayerObject.INSTANCE);
+                    */
+                    SceneStack.INSTANCE.replace(this, hausm);
                 });
 
         rechts.x = 880;
         rechts.y = (HEIGHT/2) - (rechts.height/2);
         objects.add(rechts);
-        */
         
         ButtonObject links = new ButtonObject(
                 Images.get("/assets/background/PfeilLinks.png"),
                 () -> {
-                    erstesOGScene erstes = new erstesOGScene();
+                    PhysikgangScene füüüü = new PhysikgangScene();
                     /*
                     this.objects.remove(ExamplePlayerObject.INSTANCE);
-                    mathe.objects.add(ExamplePlayerObject.INSTANCE);
+                    füüüü.objects.add(ExamplePlayerObject.INSTANCE);
                     */
-                    SceneStack.INSTANCE.replace(this, erstes);
+                    SceneStack.INSTANCE.replace(this, füüüü);
                 });
 
         links.x = 9;
         links.y = (HEIGHT/2) - (links.height/2);
         objects.add(links);
-        
+
     }
 }
