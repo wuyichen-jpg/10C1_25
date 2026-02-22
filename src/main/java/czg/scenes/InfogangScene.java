@@ -6,6 +6,7 @@ package czg.scenes;
 
 import czg.objects.BackdropObject;
 import czg.objects.ButtonObject;
+import czg.objects.minigame_objects.InfoPuzzleObject;
 import czg.objects.minigame_objects.LogicGateObject;
 import czg.scenes.minigame_scenes.InformaticsLevelScene;
 import czg.scenes.minigame_scenes.MinigameScene;
@@ -22,11 +23,11 @@ public class InfogangScene extends BaseScene{
         objects.add(new BackdropObject(Images.get("/assets/background/Infogang.png")));
 
         MinigameScene informaticsTest = new MinigameScene(
-                new InformaticsLevelScene(null, List.of(LogicGateObject.AND, LogicGateObject.OR,LogicGateObject.NOT, LogicGateObject.NAND)),
-                new InformaticsLevelScene(null, List.of(LogicGateObject.NOR, LogicGateObject.XOR,LogicGateObject.XNOR, LogicGateObject.AND)),
-                new InformaticsLevelScene(null, List.of(LogicGateObject.OR,LogicGateObject.NOT, LogicGateObject.NAND, LogicGateObject.NOR))
+                new InformaticsLevelScene(InfoPuzzleObject.getPuzzle(0)),
+                new InformaticsLevelScene(InfoPuzzleObject.getPuzzle(0)),
+                new InformaticsLevelScene(InfoPuzzleObject.getPuzzle(0))
         );
 
-        objects.add(new ButtonObject(Images.get("/assets/minigames/informatics/button.png"), informaticsTest::startMinigame));
+        objects.add(new ButtonObject(Images.get("/assets/minigames/general/menu_button.png"), informaticsTest::startMinigame));
     }
 }
