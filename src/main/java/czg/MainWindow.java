@@ -1,12 +1,8 @@
 package czg;
 
-<<<<<<< HEAD
-import czg.objects.ExamplePlayerObject;
-import czg.scenes.*;
-=======
 import czg.scenes.FoyerScene;
+import czg.scenes.InfogangScene;
 import czg.scenes.SceneStack;
->>>>>>> ashydashy/main
 import czg.sound.EndOfFileBehaviour;
 import czg.sound.SoundGroup;
 import czg.sound.StreamSound;
@@ -40,7 +36,16 @@ public class MainWindow extends JFrame implements Runnable {
      */
     public static final int FPS = 60;
 
+    /**
+     * Singleton des Fensters
+     */
     public static final MainWindow INSTANCE = new MainWindow();
+
+    /**
+     * Damit {@link Input.KeyState#fromTimePressed(long)} bei einem Durchlauf
+     * auch immer denselben {@link System#nanoTime()}-Wert benutzt
+     */
+    public long TIME_AT_UPDATE_START;
 
 
     /**
@@ -63,6 +68,7 @@ public class MainWindow extends JFrame implements Runnable {
         // Tastatur- und Maus-Eingaben empfangen
         addKeyListener(Input.INSTANCE);
         addMouseListener(Input.INSTANCE);
+        addMouseMotionListener(Input.INSTANCE);
         addFocusListener(Input.INSTANCE);
 
         // Gesamtes Programm wird beendet, wenn das Fenster geschlossen wird
@@ -85,7 +91,6 @@ public class MainWindow extends JFrame implements Runnable {
         // Zeigen
         INSTANCE.setVisible(true);
 
-<<<<<<< HEAD
         InfogangScene mgtest = new InfogangScene();
         SceneStack.INSTANCE.push(mgtest);
         /*
@@ -98,28 +103,22 @@ public class MainWindow extends JFrame implements Runnable {
         INSTANCE.SCENE_STACK.push(physik);
         */
 
-=======
         //WICHTIG!!!!!!
         FoyerScene start = new FoyerScene();
         SceneStack.INSTANCE.push(start);
 
         // BEISPIEL-SZENE (nur zur Referenz, später entfernen!)
->>>>>>> ashydashy/main
         SoundGroup.GLOBAL_SOUNDS.addSound(
                 new StreamSound("/assets/sound/hallway.ogg", true, EndOfFileBehaviour.LOOP)
         );
 
         // Haupt-Schleife in einem neuen Thread starten
-<<<<<<< HEAD
-        new Thread(INSTANCE).start();
-=======
         SwingUtilities.invokeLater(() -> {
             Insets insets = INSTANCE.getInsets();
             INSTANCE.setSize(WIDTH+insets.left+insets.right, HEIGHT+insets.top+insets.bottom);
         });
 
         new Thread(INSTANCE, "GameLoop").start();
->>>>>>> ashydashy/main
 
     }
 
@@ -155,11 +154,10 @@ public class MainWindow extends JFrame implements Runnable {
 
             // Alle nötigen Durchläufe abarbeiten
             while(delta >= 1) {
+                TIME_AT_UPDATE_START = System.nanoTime();
+
                 // Code für Szenen und Objekte ausführen
                 SceneStack.INSTANCE.update();
-                // Zuvor nur als KeyState.PRESSED eingetragene Tasten
-                // jetzt als KeyState.HELD behandeln
-                Input.INSTANCE.updatePressedToHeld();
                 // Grafik
                 SceneStack.INSTANCE.repaint();
 

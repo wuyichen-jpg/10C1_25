@@ -85,7 +85,7 @@ public class BaseObject {
      * @return Ob das Objekt angeklickt wurde
      */
     public boolean isClicked() {
-        Point mousePos = INSTANCE.getMousePosition();
+        Point mousePos = Input.INSTANCE.getMousePosition();
         if(mousePos == null)
             return false;
 
