@@ -1,10 +1,6 @@
 package czg;
 
-import czg.objects.ExamplePlayerObject;
-import czg.scenes.FoyerScene;
-import czg.scenes.BiogangScene;
-import czg.scenes.ExampleScene1;
-import czg.scenes.SceneStack;
+import czg.scenes.*;
 import czg.sound.EndOfFileBehaviour;
 import czg.sound.SoundGroup;
 import czg.sound.StreamSound;
@@ -48,7 +44,7 @@ public class MainWindow extends JFrame implements Runnable {
         super("CZGame");
 
         // Feste Größe
-        setSize(new Dimension(WIDTH,HEIGHT));
+        setSize(WIDTH,HEIGHT);
         setResizable(false);
 
         // Manuelles platzieren von Elementen
@@ -83,26 +79,24 @@ public class MainWindow extends JFrame implements Runnable {
         // Zeigen
         INSTANCE.setVisible(true);
 
-        // Haupt-Schleife in einem neuen Thread starten
-        new Thread(INSTANCE).start();
-
-        //WICHTIG!!!!!!
-        FoyerScene start = new FoyerScene();
-        SceneStack.INSTANCE.push(start);
-
+        InfogangScene mgtest = new InfogangScene();
+        SceneStack.INSTANCE.push(mgtest);
         /*
-        // BEISPIEL-SZENE (nur zur Referenz, später entfernen!)
-        SoundGroup.GLOBAL_SOUNDS.addSound(
-                new StreamSound("/assets/sound/hallway.ogg", true, EndOfFileBehaviour.LOOP)
-        );
-
-        ExampleScene1 s1 = new ExampleScene1();
-        s1.objects.add(ExamplePlayerObject.INSTANCE);
-        SceneStack.INSTANCE.push(s1);
-
-        // Haupt-Schleife in einem neuen Thread starten
-        new Thread(INSTANCE).start();
+        BiogangScene start = new BiogangScene();
+        SceneStack.INSTANCE.push(start);
         */
+        /*
+        PhysikgangScene physik = new PhysikgangScene();
+        start.objects.add(ExamplePlayerObject.INSTANCE);
+        INSTANCE.SCENE_STACK.push(physik);
+        */
+
+        SwingUtilities.invokeLater(() -> {
+            Insets insets = INSTANCE.getInsets();
+            INSTANCE.setSize(WIDTH+insets.left+insets.right, HEIGHT+insets.top+insets.bottom);
+        });
+
+        new Thread(INSTANCE, "GameLoop").start();
 
     }
 
