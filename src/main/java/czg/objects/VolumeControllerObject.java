@@ -41,7 +41,7 @@ public class VolumeControllerObject extends BaseObject {
         volume = function.apply(
                 Math.min(1, Math.max(
                                 0,
-                                Point2D.distance(ExamplePlayerObject.INSTANCE.x, ExamplePlayerObject.INSTANCE.y, x, y) - minDistance
+                                Point2D.distance(PlayerObject.INSTANCE.x, PlayerObject.INSTANCE.y, x, y) - minDistance
                         ) / maxDistance
                 )).floatValue();
 
