@@ -77,6 +77,11 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, F
      */
     private final Map<Integer, Long> keyStates = new ConcurrentHashMap<>();
 
+    /**
+     * Tasten, die am Ende dieses Frames als {@link KeyState#HELD} angesehen werden, da sie
+     * in diesem Frame durch einen Aufruf von {@link #getKeyState(int)} als {@link KeyState#PRESSED}
+     * befunden wurden
+     */
     private final List<Integer> keyButtonsToUpdateToHeld = new ArrayList<>();
 
     /**
@@ -84,6 +89,11 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, F
      */
     private final Map<Integer, Long> mouseStates = new ConcurrentHashMap<>();
 
+    /**
+     * Maustasten, die am Ende dieses Frames als {@link KeyState#HELD} angesehen werden, da sie
+     * in diesem Frame durch einen Aufruf von {@link #getKeyState(int)} als {@link KeyState#PRESSED}
+     * befunden wurden
+     */
     private final List<Integer> mouseButtonsToUpdateToHeld = new ArrayList<>();
 
     /**
@@ -97,9 +107,13 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, F
      * @return Zustand der Taste. Siehe {@link KeyState}.
      */
     public KeyState getKeyState(int keyCode) {
+        // Aus der Dauer, die die Taste gedrückt wurde, einen KeyState ableiten
         KeyState result = KeyState.fromTimePressed(keyStates.getOrDefault(keyCode, -1L));
+        
+        // Wenn die Taste PRESSED ist, wird sie ab dem nächsten Frame als HELD angesehen
         if(result == KeyState.PRESSED)
             keyButtonsToUpdateToHeld.add(keyCode);
+        
         return result;
     }
 
@@ -109,9 +123,13 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, F
      * @return Zustand der Taste. Siehe {@link KeyState}.
      */
     public KeyState getMouseState(int button) {
+        // Aus der Dauer, die die Maustaste gedrückt wurde, einen KeyState ableiten
         KeyState result = KeyState.fromTimePressed(mouseStates.getOrDefault(button, -1L));
+
+        // Wenn die Maustaste PRESSED ist, wird sie ab dem nächsten Frame als HELD angesehen
         if(result == KeyState.PRESSED)
             mouseButtonsToUpdateToHeld.add(button);
+        
         return result;
     }
 
@@ -125,7 +143,9 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, F
         return mousePosition;
     }
 
-
+    /**
+     * Siehe {@link #keyButtonsToUpdateToHeld}, {@link #getKeyState(int)}
+     */
     public void updateToHeld() {
         keyButtonsToUpdateToHeld.forEach(code -> keyStates.put(code, HELD_THRESHOLD));
         mouseButtonsToUpdateToHeld.forEach(code -> mouseStates.put(code, HELD_THRESHOLD));
