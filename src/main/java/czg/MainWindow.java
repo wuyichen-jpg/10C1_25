@@ -98,11 +98,6 @@ public class MainWindow extends JFrame implements Runnable {
         FoyerScene foyer = new FoyerScene();
         SceneStack.INSTANCE.push(foyer);
 
-        // BEISPIEL-SZENE (nur zur Referenz, später entfernen!)
-        SoundGroup.GLOBAL_SOUNDS.addSound(
-                new StreamSound("/assets/sound/hallway.ogg", true, EndOfFileBehaviour.LOOP)
-        );
-
         // Fenstergröße beheben
         SwingUtilities.invokeLater(() -> {
             Insets insets = INSTANCE.getInsets();
