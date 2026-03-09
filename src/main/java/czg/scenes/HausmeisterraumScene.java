@@ -15,7 +15,7 @@ import static czg.MainWindow.WIDTH;
  * @author guest-rwl69f
  */
 public class HausmeisterraumScene extends BaseScene{
-    public HausmeisterraumScene(){
+    public HausmeisterraumScene() {
         //Einfügen des Hintergrunds
         objects.add(new BackdropObject(Images.get("/assets/background/Hausmeisterraum.png")));
         

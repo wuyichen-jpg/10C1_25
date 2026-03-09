@@ -11,28 +11,30 @@ import czg.util.Images;
 import static czg.MainWindow.WIDTH;
 
 /**
- * @author Jonas648
+ *
+ * @author guest-rwl69f
  */
-public class BioraumScene extends BaseScene{
-    public BioraumScene(){
+public class ChemieraumScene extends BaseScene{
+    public ChemieraumScene(){
         //Einfügen des Hintergrunds
-        objects.add(new BackdropObject(Images.get("/assets/background/Bio-Raum.png")));
-
+        objects.add(new BackdropObject(Images.get("/assets/background/Chemieraum.png")));
+        
 
         ButtonObject unten = new ButtonObject(
                 Images.get("/assets/background/PfeilUnten.png"),
                 () -> {
-                    BiogangScene bio = new BiogangScene();
+                    ChemiegangScene hausm = new ChemiegangScene();
                     /*
                     this.objects.remove(ExamplePlayerObject.INSTANCE);
                     tr1.objects.add(ExamplePlayerObject.INSTANCE);
                     */
-                    SceneStack.INSTANCE.replace(this, bio);
+                    SceneStack.INSTANCE.replace(this, hausm);
                 });
 
         unten.x = (WIDTH/2) - (unten.width/2);
-        unten.y = 452;
+        unten.y = 440;
         objects.add(unten);
-
-    }
+        
+        }
 }
+

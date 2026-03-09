@@ -6,6 +6,7 @@ package czg.scenes;
 
 import czg.objects.BackdropObject;
 import czg.objects.ButtonObject;
+import czg.objects.InvisibleDoorObject;
 import czg.util.Images;
 
 import static czg.MainWindow.HEIGHT;
@@ -18,6 +19,12 @@ public class BiogangScene extends BaseScene{
     public BiogangScene(){
         //Einfügen des Hintergrunds
         objects.add(new BackdropObject(Images.get("/assets/background/Biogang.png")));
+        
+        //Einfügen des unsichtbaren Tür-Objektes auf Position der Tür
+        BioraumScene bio = new BioraumScene();
+        objects.add(new InvisibleDoorObject(656, 180,this, bio));
+        
+        
         
         //Buttons zum Klicken in andere Gangszenen
         ButtonObject rechts = new ButtonObject(

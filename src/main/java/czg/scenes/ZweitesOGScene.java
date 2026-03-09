@@ -4,15 +4,16 @@
  */
 package czg.scenes;
 
-import static czg.MainWindow.HEIGHT;
-import static czg.MainWindow.WIDTH;
 import czg.objects.BackdropObject;
 import czg.objects.ButtonObject;
 import czg.util.Images;
 
+import static czg.MainWindow.HEIGHT;
+import static czg.MainWindow.WIDTH;
+
 /**
  *
- * @author guest-ku1dtt
+ * @author guest-fqz0q0
  */
 public class ZweitesOGScene extends BaseScene{
     public ZweitesOGScene(){
@@ -60,7 +61,7 @@ public class ZweitesOGScene extends BaseScene{
                 });
 
         unten.x = (WIDTH/2) - (unten.width/2);
-        unten.y = 440;
+        unten.y = 452;
         objects.add(unten);
     }
 }

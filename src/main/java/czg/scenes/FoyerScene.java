@@ -54,7 +54,7 @@ public class FoyerScene extends BaseScene{
         ButtonObject oben = new ButtonObject(
                 Images.get("/assets/background/PfeilOben.png"),
                 () -> {
-                   ErstesOGScene erstes = new ErstesOGScene();
+                    ErstesOGScene erstes = new ErstesOGScene();
                     /*
                     this.objects.remove(ExamplePlayerObject.INSTANCE);
                     erstes.objects.add(ExamplePlayerObject.INSTANCE);
