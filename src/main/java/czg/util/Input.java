@@ -147,8 +147,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, F
      * Siehe {@link #keyButtonsToUpdateToHeld}, {@link #getKeyState(int)}
      */
     public void updateToHeld() {
-        keyButtonsToUpdateToHeld.forEach(code -> keyStates.put(code, HELD_THRESHOLD));
-        mouseButtonsToUpdateToHeld.forEach(code -> mouseStates.put(code, HELD_THRESHOLD));
+        keyButtonsToUpdateToHeld.forEach(code -> keyStates.put(code, MainWindow.INSTANCE.TIME_AT_UPDATE_START - HELD_THRESHOLD));
+        mouseButtonsToUpdateToHeld.forEach(code -> mouseStates.put(code, MainWindow.INSTANCE.TIME_AT_UPDATE_START - HELD_THRESHOLD));
         keyButtonsToUpdateToHeld.clear();
         mouseButtonsToUpdateToHeld.clear();
     }
