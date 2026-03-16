@@ -59,7 +59,9 @@ public class DragObject extends BaseObject {
             return;
 
         if(! isDragged && isClicked(true)) {
-            // Wenn das Objekt angeklickt wird, beginnen wir, es zu ziehen
+            // Wenn das Objekt angeklickt wird, verschieben wir es an oberste Stelle (z-Achse) und beginnen, es zu ziehen
+            scene.objects.remove(this);
+            scene.objects.add(this);
             isDragged = true;
         } else if (! Input.INSTANCE.getMouseState(MouseEvent.BUTTON1).isDown()) {
             // Wenn die linke Maustaste losgelassen wird, wird das Objekt nicht mehr gezogen
