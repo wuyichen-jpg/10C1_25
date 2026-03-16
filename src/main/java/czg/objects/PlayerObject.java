@@ -1,5 +1,6 @@
 package czg.objects;
 
+import czg.MainWindow;
 import czg.scenes.BaseScene;
 import czg.scenes.InventarScene;
 import czg.scenes.SceneStack;
@@ -77,6 +78,9 @@ public class PlayerObject extends BaseObject{
         Image baseSprite = Images.get("/assets/characters/PlayerBase.png");
         width = baseSprite.getWidth(null) * PIXEL_SCALE;
         height = baseSprite.getHeight(null) * PIXEL_SCALE;
+
+        x = 100;
+        y = MainWindow.HEIGHT - 200;
 
         // Tatsächlichen Sprite als zunächst leeres Bild erstellen
         sprite = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
