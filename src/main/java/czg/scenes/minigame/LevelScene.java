@@ -1,4 +1,4 @@
-package czg.scenes.minigame_scenes;
+package czg.scenes.minigame;
 
 import czg.MainWindow;
 import czg.objects.*;

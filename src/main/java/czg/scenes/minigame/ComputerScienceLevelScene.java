@@ -1,10 +1,10 @@
-package czg.scenes.minigame_scenes;
+package czg.scenes.minigame;
 
 import czg.MainWindow;
+import czg.minigame.ComputerSciencePuzzle;
 import czg.objects.BaseObject;
 import czg.objects.ButtonObject;
 import czg.objects.Department;
-import czg.objects.minigame_objects.ComputerSciencePuzzle;
 
 /**
  * Level des Informatik-Minigames, in welchem Logikgatter in einem

@@ -1,13 +1,21 @@
-package czg.objects.minigame_objects;
+package czg.minigame;
 
+import czg.objects.minigame.TangramPieceObject;
+import czg.scenes.minigame.MathematicsLevelScene;
 import czg.util.Images;
 
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * Die verschiedenen Tangram-Rätsel für die drei Level
+ * des Mathematik-Minigames
+ */
 public enum MathematicsPuzzle {
-    // Level 1
-    // Herz
+
+    /**
+     * Level 1: Herz
+     */
     P_00("/assets/minigames/mathematics/puzzle_1_1.png", 7, new double[][][] {
         {
             {0.33, 0.4, 0.0},
@@ -28,7 +36,9 @@ public enum MathematicsPuzzle {
             {0.17, 0.0, 0.0}
         }
     }),
-    // Schwan
+    /**
+     * Level 1: Schwan
+     */
     P_01("/assets/minigames/mathematics/puzzle_1_2.png", 7, new double[][][] {
         {
             {0.0, 0.55, 0.0},
@@ -40,7 +50,9 @@ public enum MathematicsPuzzle {
             {0.58, 0.31, 0.0}
         }
     }),
-    // Berg (aktuell noch Schwan)
+    /**
+     * Level 1: Berg (aktuell noch Schwan)
+     */
     P_02("/assets/minigames/mathematics/puzzle_1_2.png", 7, new double[][][] {
         {
             {0.0, 0.55, 0.0},
@@ -53,7 +65,9 @@ public enum MathematicsPuzzle {
         }
     }),
 
-    // Level 2
+    /**
+     * Level 2: TODO
+     */
     P_10("/assets/minigames/mathematics/puzzle_1_1.png", 1, new double[][][] {
         {
             {0.33, 0.4, 0.0},
@@ -65,6 +79,9 @@ public enum MathematicsPuzzle {
             {0.33, 0.6, 0.0}
         }
     }),
+    /**
+     * Level 2: TODO
+     */
     P_11("/assets/minigames/mathematics/puzzle_1_1.png", 1, new double[][][] {
         {
             {0.33, 0.4, 0.0},
@@ -76,6 +93,9 @@ public enum MathematicsPuzzle {
             {0.33, 0.6, 0.0}
         }
     }),
+    /**
+     * Level 2: TODO
+     */
     P_12("/assets/minigames/mathematics/puzzle_1_1.png", 1, new double[][][] {
         {
             {0.33, 0.4, 0.0},
@@ -88,6 +108,9 @@ public enum MathematicsPuzzle {
         }
     }),
 
+    /**
+     * Level 3: TODO
+     */
     P_20("/assets/minigames/mathematics/puzzle_1_1.png", 0, new double[][][] {
         {
             {0.33, 0.4, 0.0},
@@ -99,6 +122,9 @@ public enum MathematicsPuzzle {
             {0.33, 0.6, 0.0}
         }
     }),
+    /**
+     * Level 3: TODO
+     */
     P_21("/assets/minigames/mathematics/puzzle_1_1.png", 0, new double[][][] {
         {
             {0.33, 0.4, 0.0},
@@ -110,6 +136,9 @@ public enum MathematicsPuzzle {
             {0.33, 0.6, 0.0}
         }
     }),
+    /**
+     * Level 3: TODO
+     */
     P_22("/assets/minigames/mathematics/puzzle_1_1.png", 0, new double[][][] {
         {
             {0.33, 0.4, 0.0},
@@ -122,6 +151,9 @@ public enum MathematicsPuzzle {
         }
     });
 
+    /**
+     * Die möglichen Tangram-Formen für jedes Level
+     */
     public static final MathematicsPuzzle[][] PUZZLES = {
         {
             MathematicsPuzzle.P_00,
@@ -137,7 +169,12 @@ public enum MathematicsPuzzle {
             MathematicsPuzzle.P_22
         }
     };
-    
+
+    /**
+     * Wie weit ein Tangram-Teil von seiner korrekten
+     * Position entfernt sein darf und trotzdem noch als
+     * richtig angesehen wird
+     */
     public static final int MARGIN_OF_ERROR = 20;
 
     /**
@@ -174,7 +211,16 @@ public enum MathematicsPuzzle {
         // Entsprechenden Eintrag aus PUZZLES zurückgeben
         return PUZZLES[level][r];
     }
-    
+
+    /**
+     * Prüft, ob die Tangram-Teile richtig gelegt wurden
+     * @param pieces Die Tangram-Teile in der {@link MathematicsLevelScene}
+     * @param x X-Koordinate des Puzzle-Bereichs
+     * @param y Y-Koordinate des Puzzle-Bereichs
+     * @param width Breite des Puzzle-Bereichs
+     * @param height Höhe des Puzzle-Bereichs
+     * @return Ob die Form richtig gelegt wurde
+     */
     public boolean isSolutionValid(TangramPieceObject[] pieces, int x, int y, int width, int height) {
         for(double[][] solution : solutions) {
             // Große Dreiecke
@@ -231,7 +277,7 @@ public enum MathematicsPuzzle {
         for(int i = 0; i < amountOfGivenPieces; i++) {
             int rIdx;
             while(true) {
-                rIdx = (int) (7 * new Random().nextDouble());
+                rIdx = new Random().nextInt(7);
                 boolean validIdx = true;
                 for(int j = 0; j < amountOfGivenPieces; j++) {
                     if (idx[j] == rIdx) {
@@ -244,7 +290,7 @@ public enum MathematicsPuzzle {
             idx[i] = rIdx;
         }
         
-        int rSolution = (int) (solutions.length * new Random().nextDouble());
+        int rSolution = new Random().nextInt(solutions.length);
         for(int i : idx) {
             pieces[i].setRotation(solutions[rSolution][i][2]);
             pieces[i].x = (int) (x + solutions[rSolution][i][0]*width);

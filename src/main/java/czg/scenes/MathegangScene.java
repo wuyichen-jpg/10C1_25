@@ -6,7 +6,7 @@ package czg.scenes;
 
 import czg.MainWindow;
 import czg.objects.*;
-import czg.scenes.minigame_scenes.Minigames;
+import czg.scenes.minigame.Minigames;
 import czg.util.Images;
 
 /**

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package czg.scenes.minigame_scenes;
+package czg.scenes.minigame;
 
 import czg.objects.Department;
 import czg.scenes.BaseScene;

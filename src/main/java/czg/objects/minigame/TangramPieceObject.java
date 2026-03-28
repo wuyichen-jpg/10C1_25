@@ -1,8 +1,8 @@
-package czg.objects.minigame_objects;
+package czg.objects.minigame;
 
 import czg.objects.BaseObject;
 import czg.scenes.BaseScene;
-import czg.scenes.minigame_scenes.MathematicsLevelScene;
+import czg.scenes.minigame.MathematicsLevelScene;
 import czg.util.Images;
 import czg.util.Input;
 
@@ -10,34 +10,38 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+/**
+ * Ein Tangram-Teil, welches für das Mathematik-Minigame
+ * verwendet wird
+ */
 public class TangramPieceObject extends BaseObject {
-    public final int ID;
+
+    /**
+     * Dateipfad des ursprünglichen Bildes
+     */
     private final String SPRITE_PATH;
+
     private int originalWidth;
     private int originalHeight;
+    /**
+     * Drehung in Grad
+     */
     public double rotation;
     public MathematicsLevelScene levelScene;
 
     private boolean isDragged = false;
 
+    /**
+     * Ein neues Tangram-Teil erstellen
+     * @param id Bestimmt die zu ladende Bilddatei
+     */
     private TangramPieceObject(int id) {
-       super(Images.get(String.format("/assets/minigames/mathematics/tangram_piece_%02d.png", id)));
-       this.ID = id;
-       this.SPRITE_PATH = String.format("/assets/minigames/mathematics/tangram_piece_%02d.png", id);
+       super(Images.get("/assets/minigames/mathematics/tangram_piece_%02d.png".formatted(id)));
+       this.SPRITE_PATH = "/assets/minigames/mathematics/tangram_piece_%02d.png".formatted(id);
        this.originalWidth = sprite.getWidth(null);
        this.originalHeight = sprite.getHeight(null);
        this.rotation = 0;
        this.levelScene = null;
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
-        super.draw(g);
-        g.setColor(Color.RED);
-        g.fillRect(x-1, y-1, 2, 2);
-
-        g.setColor(Color.BLUE);
-        g.drawRect(x, y, width, height);
     }
 
     public static TangramPieceObject[] generatePieces() {
@@ -58,6 +62,14 @@ public class TangramPieceObject extends BaseObject {
         }
     }
 
+    /**
+     * Schiebt die Tangram-Teile wieder zu einem Quadrat zusammen
+     * @param pieces Array von {@link TangramPieceObject}s, erhalten von {@link #generatePieces()}
+     * @param x X-Koordinate des Tangram-Quadrats
+     * @param y Y-Koordinate des Tangram-Quadrats
+     * @param width Breite des Tangram-Quadrats
+     * @param height Höhe des Tangram-Quadrats
+     */
     public static void generatePacked(TangramPieceObject[] pieces, int x, int y, int width, int height) {
         pieces[0].setRotation(0);
         pieces[0].x = x;
@@ -117,9 +129,7 @@ public class TangramPieceObject extends BaseObject {
     }
 
     public void rotate(double degree) {
-        rotation += degree;
-
-        rotation %= 360;
+        rotation = (rotation + degree) % 360;
 
         double scaleX = (double) width / sprite.getWidth(null);
         double scaleY = (double) height / sprite.getHeight(null);

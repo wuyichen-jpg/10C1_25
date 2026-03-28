@@ -1,11 +1,17 @@
-package czg.objects.minigame_objects;
+package czg.minigame;
 
+import czg.scenes.minigame.ComputerScienceLevelScene;
 import czg.util.Images;
 
 import java.awt.*;
 import java.util.Random;
 
-public enum LogicGateObject {
+/**
+ * Informationen über die verschiedenen Logikgatter für {@link ComputerSciencePuzzle}
+ * und {@link ComputerScienceLevelScene}
+ */
+public enum LogicGate {
+
     AND("/assets/minigames/computer_science/and_gate.png"),
     OR("/assets/minigames/computer_science/or_gate.png"),
     NOT("/assets/minigames/computer_science/not_gate.png"),
@@ -16,23 +22,33 @@ public enum LogicGateObject {
 
     public final Image sprite;
 
-    LogicGateObject(String path) {
+    LogicGate(String path) {
         this.sprite = Images.get(path);
     }
 
-    public static LogicGateObject getRandom() {
-        int r = (int) (new Random().nextDouble() * LogicGateObject.values().length);
-
-        return LogicGateObject.values()[r];
+    /**
+     * Gibt eine zufällige Enum-Konstante zurück
+     * @return Enum-Konstante
+     */
+    public static LogicGate getRandom() {
+        int r = new Random().nextInt(values().length);
+        return LogicGate.values()[r];
     }
 
-    public static LogicGateObject[] getRandomArray(int length, LogicGateObject excludedGate) {
-        LogicGateObject[] tmp = new LogicGateObject[length];
-        LogicGateObject[] usedGates = new LogicGateObject[length];
+    /**
+     * Gibt einen Array von zufälligen Enum-Konstanten zurück.
+     * Dabei kommt jeder Wert im Array nur ein Mal vor.
+     * @param length Wie viele Elemente?
+     * @param excludedGate Dieses Element wird nicht im Ergebnis enthalten sein
+     * @return Array mit Enum-Konstanten
+     */
+    public static LogicGate[] getRandomArray(int length, LogicGate excludedGate) {
+        LogicGate[] tmp = new LogicGate[length];
+        LogicGate[] usedGates = new LogicGate[length];
 
         for (int i = 0; i < length; i++) {
             boolean valid = false;
-            LogicGateObject rGate = null;
+            LogicGate rGate = null;
             while (!valid) {
                 valid = true;
 

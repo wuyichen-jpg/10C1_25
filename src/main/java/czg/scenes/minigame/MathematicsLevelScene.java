@@ -1,10 +1,10 @@
-package czg.scenes.minigame_scenes;
+package czg.scenes.minigame;
 
 import czg.MainWindow;
+import czg.minigame.MathematicsPuzzle;
 import czg.objects.BaseObject;
 import czg.objects.Department;
-import czg.objects.minigame_objects.MathematicsPuzzle;
-import czg.objects.minigame_objects.TangramPieceObject;
+import czg.objects.minigame.TangramPieceObject;
 import czg.util.Images;
 
 import java.util.Arrays;
