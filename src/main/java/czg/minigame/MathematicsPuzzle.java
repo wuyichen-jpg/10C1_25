@@ -19,13 +19,13 @@ public enum MathematicsPuzzle {
      */
     P_INIT("/assets/minigames/mathematics/tangram_packed.png", 7, new double[][][] {
         {
-            {0.0, 0.0, 0.0, 1.0, 0.5},
-            {0.0, 0.0, 0.0, 0.5, 1.0},
-            {0.5, 0.5, 0.0, 0.5, 0.5},
-            {0.0, 0.75, 0.0, 0.5, 0.25},
-            {0.5, 0.25, 0.0, 0.25, 0.5},
-            {0.75, 0.0, 0.0, 0.25, 0.75},
-            {0.25, 0.5, 0.0, 0.5, 0.5}
+            {0.0, 0.0, 0.0, 1.0, 0.5},      // Großes Dreieck 1
+            {0.0, 0.0, 0.0, 0.5, 1.0},      // Großes Dreieck 2
+            {0.5, 0.5, 0.0, 0.5, 0.5},      // Mittleres Dreieck
+            {0.0, 0.75, 0.0, 0.5, 0.25},    // Kleines Dreieck 1
+            {0.5, 0.25, 0.0, 0.25, 0.5},    // Kleines Dreieck 2
+            {0.75, 0.0, 0.0, 0.25, 0.75},   // Parallelogramm
+            {0.25, 0.5, 0.0, 0.5, 0.5}      // Quadrat
         }
     }),
 
@@ -34,22 +34,22 @@ public enum MathematicsPuzzle {
      */
     P_00("/assets/minigames/mathematics/puzzle_1_1.png", 2, new double[][][] {
         {
-            {0.33, 0.4, 0.0},
-            {0.0, 0.0, 180.0},
-            {0.33, 0.0, 90.0},
-            {0.5, 0.0, 0.0},
-            {0.33, 0.4, 180.0},
-            {0.5, 0.2, 90.0},
-            {0.33, 0.6, 0.0}
+            {0.33, 0.4, 0.0},       // Großes Dreieck 1
+            {0.0, 0.0, 180.0},      // Großes Dreieck 2
+            {0.33, 0.0, 90.0},      // Mittleres Dreieck
+            {0.5, 0.0, 0.0},        // Kleines Dreieck 1
+            {0.33, 0.4, 180.0},     // Kleines Dreieck 2
+            {0.5, 0.2, 90.0},       // Parallelogramm
+            {0.33, 0.6, 0.0}        // Quadrat
         },
         {
-            {0.0, 0.4, 0.0},
-            {0.66, 0.0, 0.0},
-            {0.33, 0.0, 0.0},
-            {0.0, 0.2, 0.0},
-            {0.33, 0.6, 0.0},
-            {0.5, 0.4, 0.0},
-            {0.17, 0.0, 0.0}
+            {0.0, 0.4, 0.0},        // Großes Dreieck 1
+            {0.67, 0.0, 0.0},       // Großes Dreieck 2
+            {0.33, 0.0, 0.0},       // Mittleres Dreieck
+            {0.0, 0.2, 0.0},        // Kleines Dreieck 1
+            {0.33, 0.6, 0.0},       // Kleines Dreieck 2
+            {0.5, 0.4, 0.0},        // Parallelogramm
+            {0.17, 0.0, 0.0}        // Quadrat
         }
     }),
     /**
@@ -57,27 +57,36 @@ public enum MathematicsPuzzle {
      */
     P_01("/assets/minigames/mathematics/puzzle_1_2.png", 2, new double[][][] {
         {
-            {0.0, 0.55, 0.0},
-            {0.2, 0.55, 45.0},
-            {0.68, 0.55, 315.0},
-            {0.74, 0.0, 225.0},
-            {0.75, 0.47, 0.0},
-            {0.58, 0.0, 0.0},
-            {0.58, 0.31, 0.0}
+            {0.0, 0.55, 0.0},       // Großes Dreieck 1
+            {0.2, 0.55, 45.0},      // Großes Dreieck 2
+            {0.68, 0.55, 315.0},    // Mittleres Dreieck
+            {0.74, 0.0, 225.0},     // Kleines Dreieck 1
+            {0.75, 0.47, 0.0},      // Kleines Dreieck 2
+            {0.58, 0.0, 0.0},       // Parallelogramm
+            {0.58, 0.31, 0.0}       // Quadrat
         }
     }),
     /**
-     * Level 1: Berg (aktuell noch Schwan)
+     * Level 1: Berg
      */
-    P_02("/assets/minigames/mathematics/puzzle_1_2.png", 2, new double[][][] {
+    P_02("/assets/minigames/mathematics/puzzle_1_3.png", 2, new double[][][] {
         {
-            {0.0, 0.55, 0.0},
-            {0.2, 0.55, 45.0},
-            {0.68, 0.55, 315.0}, // wird irgendwie zuerst positioniert und dann rotiert, obwohl ich das eigentlich andersherum gemacht habe. machste nix
-            {0.75, 0.0, 225.0}, // same here
-            {0.75, 0.47, 0.0},
-            {0.58, 0.0, 0.0},
-            {0.58, 0.31, 0.0}
+            {0.66, 0.16, 45.0},     // Großes Dreieck 1
+            {0.0, 0.17, 45.0},      // Großes Dreieck 2
+            {0.5, 0.17, 135.0},     // Mittleres Dreieck
+            {0.33, 0.59, -135.0},    // Kleines Dreieck 1
+            {0.5, 0.59, -45.0},      // Kleines Dreieck 2
+            {0.33, 0.17, -45.0},     // Parallelogramm
+            {0.39, 0.0, 0.0}         // Quadrat
+        },
+        {
+            {0.66, 0.16, 45.0},     // Großes Dreieck 1
+            {0.0, 0.17, 45.0},      // Großes Dreieck 2
+            {0.33, 0.17, -45.0},    // Mittleres Dreieck
+            {0.5, 0.17, 135.0},     // Kleines Dreieck 1
+            {0.5, 0.58, -135.0},    // Kleines Dreieck 2
+            {0.34, 0.57, 45.0},     // Parallelogramm
+            {0.39, 0.0, 0.0}        // Quadrat
         }
     }),
 
