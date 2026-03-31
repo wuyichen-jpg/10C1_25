@@ -28,9 +28,44 @@ Jedes Level verwendet außerdem, im Sinne der Variabilität, drei verschiedene S
 \subsubsection{Level 1}
 
 Bei den Schaltkreisen des ersten Levels fehlt jeweils nur ein Logikgatter, welches zwei Eingänge mit einem Ausgang verbindet.
-Es ergeben sich also vier mögliche Eingangszustände, welche den Spielenden zusammen mit dem sich, durch das fehlende Gatter ergebenden Ausgangszustand, als Abbildungen präsentiert werden.
-Gesucht wird also das Logikgatter $G \in {\land , \lor , \lnot\land, \lnot\lor, }$, welches folgende Bedingungen erfüllt:
+Gesucht wird also das Logikgatter $G \in \{\land , \lor , \overline{\land}, \overline{\lor}, \veebar, \overline{\veebar}\}$, welches folgende Bedingungen erfüllt:
 
 \begin{align*}
-    x_1 G x_2 = e
+    x_1 G x_2 = y
 \end{align*}
+
+Dadurch, dass der Schaltkreis zwei Eingänge und einen Ausgang beitzt, ergeben sich vier mögliche Zustände, die in Form einer Wahrheitswerttabelle dargestellt werden können.
+Für die Rätsel des ersten Levels wurden folgende Tabellen festgelegt:
+
+\begin{tabular}{|c|c|c|} 
+    \hline
+    $x_1$ & $x_2$ & $y$ \\
+    \hline\hline
+    $0$ & $0$ & $0$ \\
+    $0$ & $1$ & $0$ \\
+    $1$ & $0$ & $0$ \\
+    $1$ & $1$ & $1$ \\
+    \hline
+\end{tabular}
+
+\begin{tabular}{|c|c|c|} 
+    \hline
+    $x_1$ & $x_2$ & $y$ \\
+    \hline\hline
+    $0$ & $0$ & $0$ \\
+    $0$ & $1$ & $1$ \\
+    $1$ & $0$ & $1$ \\
+    $1$ & $1$ & $1$ \\
+    \hline
+\end{tabular}
+
+\begin{tabular}{|c|c|c|} 
+    \hline
+    $x_1$ & $x_2$ & $y$ \\
+    \hline\hline
+    $0$ & $0$ & $1$ \\
+    $0$ & $1$ & $1$ \\
+    $1$ & $0$ & $1$ \\
+    $1$ & $1$ & $0$ \\
+    \hline
+\end{tabular}
