@@ -79,7 +79,7 @@ public class Images {
     /**
      * Dreht ein Bild.
      * @param source Originalbild
-     * @param degrees Drehung in Grad !!!ACHTUNG!!! Aktuell werden nur Vielfache von 90 Grad unterstützt
+     * @param degrees Drehung in Grad
      * @return Ein neues, gedrehtes Bild
      */
     public static Image rotateImage(Image source, double degrees) {
