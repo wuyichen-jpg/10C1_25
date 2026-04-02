@@ -10,14 +10,14 @@ buildNumber.properties
 .mvn/timing.properties
 
 # LaTeX
-docs/dokumentation/*.lof
-docs/dokumentation/*.lol
-docs/dokumentation/*.lot
-docs/dokumentation/*.pdf
-docs/dokumentation/*.aux
-docs/dokumentation/*.log
-docs/dokumentation/*.synctex.gz
-docs/dokumentation/*.toc
+docs/dokumentation/**/*.lof
+docs/dokumentation/**/*.lol
+docs/dokumentation/**/*.lot
+docs/dokumentation/**/*.pdf
+docs/dokumentation/**/*.aux
+docs/dokumentation/**/*.log
+docs/dokumentation/**/*.synctex.gz
+docs/dokumentation/**/*.toc
 
 # https://maven.apache.org/wrapper/#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
