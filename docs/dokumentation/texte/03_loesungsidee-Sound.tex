@@ -4,8 +4,11 @@ Java bietet über die \texttt{Java Sound API} eine vorgefertigte Schnittstelle z
 welchen die Wiedergabe einfach gesteuert werden kann. Der entscheidende
 Nachteil der \texttt{Clip}-Klasse ist jedoch, dass sie die gesamten Audiodaten auf einmal in den Speicher lädt. Das ist bei kleinen, wenige Sekunden langen Audiodateien kein Problem, jedoch für Musikstücke, welche mehrere Minuten dauern, ungeeignet. 
 \par Um dieses Speicherproblem zu lösen, müssen die Audiodaten \textit{gestreamt},
-also in kleinen Stücken in den Speicher geladen, verwendet und wieder
+also in kleinen Stücken in den Speicher geladen, abgespielt und wieder
 verworfen werden. Es befindet sich also immer nur eine kleine Teilmenge der Gesamtaudiodaten im Speicher.
 \par Zur Umsetzung des Streamens stellt die Java-Standardbibliothek die Klassen \texttt{AudioInputStream} und \texttt{SourceDataLine} bereit. Erstere ermöglicht es, eine Audiodatei zu öffnen und zu
 dekodieren, also die enthaltenen Audiodaten zu lesen. Im zweiten
-Schritt müssen die gelesenen Daten an eine Instanz von \texttt{SourceDataLine} übergeben werden. Dazu wird deren \textit{write}-Methode verwendet.
+Schritt müssen die gelesenen Daten an eine Instanz von \texttt{SourceDataLine} übergeben werden, welche diese dann abspielt. Dazu wird deren \textit{write}-Methode verwendet.
+
+Zusätzlich sollte es möglich sein, Sounds in Gruppen zusammenzufassen,
+um sie gemeinsam starten, pausieren und stoppen zu können.

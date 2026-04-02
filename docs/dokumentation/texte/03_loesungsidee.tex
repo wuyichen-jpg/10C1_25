@@ -1,21 +1,36 @@
 \chapter{Lösungsidee}
 
-\textbf{Das Spieldesign}
+\section{Das Spieldesign}
 
-Das CZGame sollte sich stark am realen Leben orientieren. Schulgebäude und zugehörige Accessoires sollten im Rahmen der Umsetzungsmöglichkeiten und der Spielidee eine größtmögliche Realitätstreue behalten und dem Carl-Zeiss-Gymnasium in Jena nachempfunden sein (siehe Abbildung \ref{abb:01beispiel} und \ref{abb:02beispiel}) .
+Das \textit{CZGame} ist ein Point-and-Click Computerspiel, welches im Carl-Zeiss-Gymnasium
+Jena spielt. Das Gameplay besteht Hauptsächlich aus dem Spielen von Minigames, also kleinen
+spielerischen Aktivitäten innerhalb des Spiels, und aus \glqq{}mündlichen Prüfungen\grqq{}. Bei letzteren handelt es sich um Duelle mit den Lehrkräften der verschiedenen Fachschaften der
+ Schule. Diese müssen gewonnen werden mithilfe verschiedener Gegenstände, die durch das Gewinnen der Minigames erhalten werden.
 
+Die Minigames und Duelle sind an verschiedenen Orten innerhalb der Spielwelt platziert,
+welche dem Schulgebäude nachempfunden ist: Sowohl eine vereinfachte Version der Gänge
+als auch einige begehbare Räume wurden im Spiel umgesetzt und gestaltet.
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}[b]{0.45\textwidth}
+		\includegraphics[scale=0.41]{bilder/Foyer.png}
+		\caption{Das Foyer bildet den Ausgangsort des CZGame}
+		\label{abb:foyer}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.45\textwidth}
+		\includegraphics[scale=0.41]{bilder/Hausmeisteraum.png}
+		\caption{Im Raum des Hausmeisters ist ein Modell der Schule zusehen}
+		\label{abb:hausmeister}
+	\end{minipage}
+\end{figure}
 
 Da das Spiel im Pixelartdesign entstehen sollte, musste ein geeignetes Programm genutzt werden um das Format der Graphik digital und in Pixeln zu implementieren. Das herkömmliche Format eines Computerbildschirms beträgt standardmäßig 16 zu 9. Da das CZGame als PC-Spiel entworfen werden sollte wurde ein rechteckiges Format der Größe 240 zu 135 Pixeln gewählt, das diesem Verhältnis entspricht.
 
 
-Als Programm wurde das kostenlose und qualitativ hochwertige Onlinetool \emph{Pixelart} verwendet. 
+Als Programm wurde das kostenlose und qualitativ hochwertige Onlinetool \emph{Pixelart} verwendet.  
 Innerhalb der Gruppe \emph{Graphikdesign} wurde die Arbeit zum erstellen der Hintergrundgraphiken aufgeteilt. Durch die kollektive Zusammenarbeit beim erstellen der Bilder, kommt es im Endergebnis zu einer großen Vielfalt an Farben und Formen, die die Freude am Spiel fördern sollen. Da jeder die Möglichkeit hatte selbst schulspezifische Mottos in die Hintergründe einzubringen, sorgt jeder Raum ganz individuell für eine Überraschung.
-\begin{figure}[ht]
- \centering
- \includegraphics[scale=0.5]{bilder/Foyer.png}
- \caption{Das Foyer bildet den Ausgangsort des CZGames}
- \label{abb:01beispiel}
-\end{figure}
 
 Die Gruppe \emph{Graphikdesign} stand während den Arbeiten an den Bilddateien in starkem Austausch mit der Gruppe \emph{Item- \& Charakterdesign} so wie mit den Verantwortlichen für das Erstellen von Minigames. Unter anderem musste das Größenverhältnis der Charaktere und Spielerfiguren auf die Größe der Räume angepasst werden. 
 
@@ -23,14 +38,9 @@ Für das Design der einzelnen Spielerfiguren und der Figuren des Lehrkörpers wu
 
 
 
-\begin{figure}[ht]
- \centering
- \includegraphics[scale=0.5]{bilder/Hausmeisteraum.png}
- \caption{Im Raum des Hausmeisters ist ein Modell der Schule zusehen}
- \label{abb:02beispiel}
-\end{figure}
 
-\textbf{Der Spielaufbau}
+
+\section{Der Spielaufbau}
 
 Das CZGame sollte grundsätzlich die Form eines Point-and-Click-Spiels erhalten. Während der Spieler sich über dafür vorgesehene Pfeile durch das Schulgebäude bewegt, sollte die Möglichkeit eines sogenannten Minigames oder einer Challenge, ähnlich einer mündlichen Prüfung mit einem Mitglied des Lehrkörpers, bestehen. Das Wechseln der Räume erfolgt über Standbilder, in denen die Figur durch 
 
@@ -70,6 +80,9 @@ Wörtliche Rede wird in Latex zwischen \verb|"`| und \verb|"'| gesetzt.
 \begin{quote}
  "`\blindtext"'\footnote{Heinemann, 1998, S.\,280}
 \end{quote}
+
+\section{Die Spiel-Engine}
+\input{texte/03_loesungsidee-Engine.tex}
 
 \section{Grafikdesign}
 \input{texte/03_loesungsidee-Grafikdesign.tex}
