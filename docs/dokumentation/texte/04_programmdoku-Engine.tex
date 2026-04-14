@@ -1,0 +1,297 @@
+\begin{sloppypar}
+
+\subsection{Fenster}
+
+Die Klasse \texttt{czg.MainWindow} stellt das Spielfenster
+dar und beinhaltet die \texttt{main}-Methode sowie eine
+Reihe von statischen Konstanten. Letztere werden in der
+Dokumentation mit dem gleichen Namen wie im Code bezeichnet.
+
+\begin{itemize}
+	\item \texttt{int PIXEL\_SCALE}: Da das Spiel im Pixel-Art-Stil
+	      umgesetzt wurde, sind die im Spiel enthaltenen Bilddateien sehr
+	      klein. Deshalb werden sie um diesen konstanten Faktor skaliert.
+	\item \texttt{int WIDTH, HEIGHT}: Die Höhe und Breite des Spielfensters
+	      in Pixeln.
+	\item \texttt{int FPS}: Abkürzung für \textit{Frames per Second}.
+	      Wie oft Spiellogik und Rendern in einer Sekunde ausgeführt
+	      werden sollen.
+	\item \texttt{MainWindow INSTANCE = new MainWindow()}: Die \textit{Singleton}-
+	      Instanz des Fensters.
+	\item \texttt{long TIME\_AT\_UPDATE\_START}: Der Wert von \texttt{System.nanoTime()}
+	      zu beginn eines Logik-Durchlaufs. Siehe Abschnitt \ref{programm:engine:eingabe}.
+\end{itemize}
+
+
+\subsubsection{\texttt{main}-Methode}
+
+\texttt{czg.MainWindow.main} erledigt folgende Initialisierungsaufgaben:
+
+\begin{itemize}
+	\item Platzieren das Fenster in der Mitte des Bildschirms und
+	      Anzeigen desselben
+	\item Starten der Hintergrundmusik, indem eine neue Instanz von
+	      \texttt{czg.sound.StreamSound} zur globalen Sound-Gruppe
+	      \texttt{czg.sound.SoundGroup.GLOBAL\_SOUNDS} hinzugefügt wird.
+	      Siehe Abschnitt \ref{programm:engine:sound:gruppe}.
+	\item Korrigieren der Fenstergröße. Dies ist notwendig, da beim
+	      Aufruf von \texttt{javax.swing.JFrame.setSize} die vom
+	      Betriebssystem angezeigte Fensterleiste mit einberechnet
+	      ist. Entsprechend muss die Höhe des Fensters noch einmal
+	      um die Höhe der Fensterleiste erhöht werden, um keinen Teil
+	      der Grafik abzuschneiden.
+	\item Anzeigen der ersten Szene, indem eine neue Instanz der entsprechenden
+	      Klasse zum Szenenstapel hinzugefügt wird. Siehe Abschnitt \ref{programm:engine:szene:stapel}.
+	\item Starten der Hauptschleife. Siehe Abschnitt \ref{programm:engine:hauptschleife}.
+\end{itemize}
+
+
+\subsubsection{Hauptschleife} \label{programm:engine:hauptschleife}
+
+Wie in Abschnitt \ref{idee:engine:hauptschleife} erwähnt läuft die
+Hauptschleife mit einer Frequenz von 60Hz, wie in \texttt{czg.MainWindow.FPS}
+definiert. Die Grundidee des Algorithmus findet sich ebenfalls dort.
+Im folgenden ist die letztendliche Implementierung in \texttt{MainWindow.java}
+gelistet:
+
+\begin{lstlisting}[caption=Hauptschleife, label=programm:engine:hauptschleife:code, captionpos=t, language=Java]
+// In welchem Zeitintervall (in Nanosekunden) die Spiellogik
+// ausgeführt werden soll
+final double interval = 1e9 / FPS;
+// Zählt, wie oft die Spiellogik durchlaufen werden sollte.
+double delta = 0;
+
+// Zeit seit dem letzten Durchlauf der while(true)-Schleife
+long lastTime = System.nanoTime();
+// Zweite Zeit-Variable. Wird zur neuen lastTime.
+long currentTime;
+
+//noinspection InfiniteLoopStatement
+while(true) {
+	// Aktuelle Zeit messen
+	currentTime = System.nanoTime();
+	
+	// Die Zeit berechnen, die seit dem letzten Durchlauf
+	// dieser Schleife vergangen ist.
+	// Damit berechnen, wie oft die Spiellogik in dieser
+	// Zeitspanne hätte durchlaufen
+	// werden sollen (normalerweise eine Anzahl <1).
+	delta += (currentTime - lastTime) / interval;
+	
+	// Die currentTime wird wieder zur lastTime
+	lastTime = currentTime;
+	
+	// Alle nötigen Durchläufe abarbeiten
+	while(delta >= 1) {
+		TIME_AT_UPDATE_START = System.nanoTime();
+		
+		// Code für Szenen und Objekte ausführen
+		SceneStack.INSTANCE.update();
+		
+		[ausgelassen]
+		
+		// Grafik
+		SceneStack.INSTANCE.repaint();
+		
+		// Zusätzliche Aktualisierung
+		// für die Eingabeverarbeitung
+		Input.INSTANCE.update();
+		
+		// Durchlauf abgeschlossen, Zähler kann um
+		// 1 verringert werden
+		delta--;
+	}
+}
+\end{lstlisting}
+
+Der hier ausgelassene Teil des Codes beinhaltet lediglich
+die Logik für einige Tastenkürzel. Diese werden in
+späteren Abschnitten an den entsprechenden Stellen
+erwähnt und sind im Programmablaufprotokoll noch einmal
+gelistet.
+
+
+\subsection{Eingabe} \label{programm:engine:eingabe}
+
+Die Klasse \texttt{czg.util.Input} implementiert die in
+\ref{idee:engine:grafik-eingabe} erwähnten Interfaces
+\texttt{java.awt.event.KeyListener} und \texttt{java.awt.event.MouseListener},
+sowie zusätzlich noch \texttt{java.awt.event.FocusListener}.
+Zusätzlich definiert sie die Konstante \texttt{HELD\_THRESHOLD}.
+Diese sagt aus, wie lange eine Taste gedrückt sein darf und
+dabei noch als gedrückt und nicht als gehalten gilt.
+Die Verwendung dieser Konstante sowie die verschiedenen
+Zustände von Tasten werden im Verlauf dieses Abschnitts
+näher erklärt.
+
+Der Konstruktor der Klasse ist privat. Es kann jedoch
+über die statische Konstante \texttt{Input.INSTANCE}
+auf eine Singleton-Instanz der Klasse zugegriffen werden.
+Diese wird u.A. von \texttt{MainWindow} an deren
+\texttt{addKeyListener}- und \texttt{addMouseListener}-Methoden
+übergeben, um das Eingabeverarbeitungssystem funktionstüchtig
+zu machen.
+
+
+\subsubsection{Speichern von gedrückten Tasten}
+
+Den Kern der \texttt{Input}-Klasse bilden zwei Instanzen von
+\texttt{java.util.concurrent.ConcurrentHashMap}:
+\texttt{keyStates} und \texttt{mouseStates}.
+Wird eine Taste gedrückt, werden die entsprechenden
+Methoden \texttt{keyPressed} und \texttt{mousePressed} von
+\texttt{Swing} aufgerufen. Die Implementierungen dieser
+Methoden in \texttt{Input} ordnen dann dem Tasten-Code der
+gedrückten Taste, welcher über die \texttt{getKeyCode}-Methode
+des \texttt{KeyEvent}- bzw. \texttt{MouseEvent}-Objekts,
+welches an die Methode übergeben wird, erhalten werden kann,
+den aktuellen Wert von \texttt{System.nanoTime()} zu, speichern
+also den Zeitpunkt, an welchem die Taste gedrückt wurde.
+
+Analog wird ein Eintrag in der entsprechenden \texttt{ConcurrentHashMap}
+wieder entfernt, wenn die zugehörige Taste losgelassen und
+somit \texttt{Input.keyReleased} bzw. \texttt{Input.mouseReleased}
+aufgerufen wird.
+
+Befindet sich das Spielfenster nicht mehr im Vordergrund bzw. im Fokus,
+so ruft \texttt{Swing} die Methode \texttt{focusLost} aus dem \texttt{FocusListener}-Interface
+auf. Die Implementierung dieser Methode in \texttt{Input} besteht
+daraus, alle Einträge aus den beiden \texttt{ConcurrentHashMap}s zu
+entfernen.
+
+
+\subsubsection{Tastenzustände und das Abfragen dieser}
+
+Nun kann der Zustand einer Taste mittels den Methoden
+\texttt{Input.getKeyState(int)} und \texttt{Input.getMouseState(int)}
+abgefragt werden. Die zu übergebenden Parameter sind die
+Tasten-Codes der abzufragenden Maus- oder Tastaturtaste,
+welche als statische Konstanten in den bereits erwähnten
+Klassen \texttt{KeyEvent} und \texttt{MouseEvent} definiert sind.
+
+Die beiden Methoden geben eine Konstante aus dem Enum
+\texttt{Input.KeyState} zurück. Dieses definiert genau
+drei Zustände für Tasten:
+
+\begin{itemize}
+	\item \texttt{NOT\_PRESSED}: Die Taste ist nicht gedrückt
+	\item \texttt{PRESSED}: Die Taste wurde, von \texttt{MainWindow.TIME\_AT\_UPDATE\_START}
+	      aus gemessen, höchstens für die Länge des Zeitintervalls
+	      \texttt{Input.HELD\_THRESHOLD} gedrückt.
+	\item \texttt{HELD}: Ist eine Taste schon länger gedrückt
+	      als \texttt{Input.HELD\_THRESHOLD}, gilt sie als gehalten
+	      und nicht mehr als gedrückt.
+\end{itemize}
+
+Zusätzlich bietet \texttt{KeyState} die Methode \texttt{isDown},
+welche \texttt{true}, wenn es sich bei der Enum-Konstante,
+für welche die Funktion aufgerufen wurde, um \texttt{PRESSED}
+oder \texttt{HELD} handelt, und sonst \texttt{false} zurückgibt.
+
+Die von \texttt{Input.getKeyState(int)} verwendete
+statische Methode \texttt{KeyState.fromTimePressed(long)} verlangt
+als Parameter den Zeitpunkt, an dem die Taste gedrückt wurde, also
+\texttt{keyPressed} bzw. \texttt{mousePressed} aufgerufen wurde,
+leitet daraus die passende Enum-Konstante ab und gibt sie zurück.
+
+Wie im Programmcodelisting \ref{programm:engine:hauptschleife:code} der Hauptschleife
+zu sehen ist, wird als letzter Teil jedes Frames die Methode
+\textit{Input.update} aufgerufen. Dies hängt zusammen mit den
+internen Listen \texttt{Input.keyButtonsToUpdateToHeld} und
+\texttt{Input.mouseButtonsToUpdateToHeld}: Jedes mal, wenn
+\texttt{Input.getKeyState} bzw. \texttt{Input.getMouseState}
+feststellt, dass der Zustand einer Taste \texttt{PRESSED} ist,
+wird deren Tasten-Code zu der entsprechenden Liste hinzugefügt.
+Beim Aufruf von \texttt{Input.update} werden dann alle Einträge
+für die Tasten-Codes in den Listen in der entsprechenden Map
+zu \texttt{HELD} geändert - wurde eine Taste also in einem Frame
+abgefragt und galt als \texttt{PRESSED}, so gilt sie ab dem nächsten
+Frame immer als \texttt{HELD}, egal wie lange sie eigentlich gehalten
+wurde. So werden z.B. Mausklicks nicht über mehrere Frames hinweg
+mehrfach registriert, denn die entsprechende Maustaste kann nur
+für höchstens einen Frame als \texttt{PRESSED} gelten.
+
+
+\subsubsection{Mausposition}
+
+Außerdem speichert \texttt{Input} die Position des Mauszeigers
+sowie diese im vorangegangenen Frame. Dies ist gelöst mithilfe
+zweier privater Variablen \texttt{mousePosition} und
+\texttt{lastMousePosition}, deren Werte über entsprechende
+Getter-Methoden abgefragt werden können. Beim Aufruf von
+\texttt{Input.update} erhält \texttt{lastMousePosition} den
+Wert von \texttt{mousePosition}. Letztere bekommt dann einen
+neuen Wert, welcher mit der \texttt{getMousePosition}-Methode
+des Szenenstapels erhalten wird, da dieser \texttt{javax.swing.JPanel}
+erweitert. Siehe \ref{programm:engine:szene:stapel}. Würde
+stattdessen die Methode mit dem gleichen Namen von \texttt{MainWindow}
+aufgerufen werden, so wäre die Mausposition versetzt, da der
+Ursprung der von dieser Methode zurückgegebenen Koordinaten
+bei der oberen linken Ecke des Fensters \textbf{inklusive Titelleiste}
+liegt.
+
+
+
+\subsubsection{Debugging-Modus}
+
+Durch wiederholtes Drücken der Taste \texttt{D} kann 
+
+
+\subsection{Spiel-Objekte}
+
+Spiel-Objekte werden mithilfe der Klasse \texttt{czg.objects.BaseObject}
+umgesetzt. Diese speichert folgende Eigenschaften:
+
+\begin{itemize}
+	\item X- und Y-Koordinaten, in Pixeln. Dabei ist $(0|0)$ die
+		  obere linke Ecke des Spielfensters, und die Koordinaten
+		  steigen nach unten bzw. nach rechts in positive Richtung an.
+	\item Höhe sowie Breite des Objekts, in Pixeln
+	\item Ein Bild, welches an den Koordinaten und mit der Größe
+	      des Objekts gezeichnet werden soll. Dieses kann auch
+	      \texttt{null} sein, in diesem Fall ist das Objekt
+	      unsichtbar.
+\end{itemize}
+
+Diese sind alle als \texttt{public} deklariert, können also
+von jeder Stelle im Code aus gelesen und geändert werden.
+
+Die Klasse bietet drei Konstruktoren, welche verschiedene
+Teilmengen der oben gelisteten Eigenschaften als Parameter
+annehmen: Entweder nur ein Bild, ein Bild und eine Position,
+oder alle drei Eigenschaften. Werden Höhe und Breite nicht
+explizit angegeben, werden sie auf die Höhe und Breite des
+Bildes, jeweils mit \texttt{PIXEL\_SCALE} multipliziert,
+gesetzt. Wird keine Position angegeben, wird das Objekt
+in die Mitte des Spielfensters platziert.
+
+Weiterhin definiert \texttt{BaseObject} eine Reihe an
+Methoden:
+
+\begin{itemize}
+	\item \texttt{getHitbox}: Verpackt Position und Größe in ein
+	      \texttt{java.awt.geom.Rectangle2D}-Objekt, welches eine
+	      Reihe nützlicher Methoden bietet.
+	\item \texttt{isClicked(boolean includeTransparency)}: Prüft,
+	      ob das Objekt angeklickt wurde, also ob sich der Mauszeiger
+	      über dem Objekt befindet und die linke Maustaste gedrückt
+	      ist. Der optionale Parameter \texttt{includeTransparency}
+	      gibt an, ob auch ein Klick auf transparente Bereiche
+	      des Bildes des Objektes berücksichtigt werden soll.
+	\item \texttt{draw(Graphics2D)}: 
+\end{itemize}
+
+
+\subsection{Szenen}
+
+\subsubsection{Der Szenenstapel} \label{programm:engine:szene:stapel}
+
+
+\subsection{Sound}
+
+Die \texttt{Java Sound API} untersetützt standardmäßig nur das unkomprimierte \texttt{WAV}-Format. Die Audiodateien liegen allerdings 
+aus Gründen der effizienteren Speicherplatznutzung im komprimierten \texttt{Ogg/Vorbis}-Format vor. Um diese laden zu können
+
+\subsubsection{Sound-Gruppe} \label{programm:engine:sound:gruppe}
+
+\end{sloppypar}

@@ -28,18 +28,19 @@ beinhalten:
 \end{itemize}
 
 
-\subsection{Hauptschleife}
+\subsection{Hauptschleife} \label{idee:engine:hauptschleife}
 
 Um die Grafik und Logik des Spiels mit einer Frequenz von 60Hz
-auszuführen, wird eine in der Spieleprogrammierung verbreitete
-und anerkannte Methode angewendet. Die Grundidee ist, in einer
+auszuführen, wird eine in der Spieleprogrammierung häufig
+genutzte Methode angewendet. Die Grundidee ist es, in einer
 Endlosschleife einen Zähler jeweils um die seit dem letzten
 Durchlauf der Schleife vergangene Zeit zu erhöhen. Erreicht der
 Zähler die Zeitmenge, nach welcher ein Durchlauf der Spiellogik
 ablaufen sollte, in diesem Fall also $\frac{1}{60}s$, wird dies
 getan und der der Zähler wieder um ebendiese Zeiteinheit verringert.
 
-% TODO Pseudocode
+Ein solcher Durchlauf der Spiellogik sowie das Rendern der Grafik
+wird als \textit{Frame} bezeichnet.
 
 
 \subsection{Klassen}
@@ -51,9 +52,14 @@ Konstruktur bereitstellt sowie optional Methoden der Elternklasse
 überschreibt, um eigene Logik zu implementieren.
 
 
-\subsection{Grafik und Eingabe}
+\subsection{Grafik und Eingabe} \label{idee:engine:grafik-eingabe}
 
 \begin{sloppypar}
+
+Zum Laden und Speichern von Bildern bietet Java die Methoden
+und Klassen \texttt{javax.imageio.ImageIO.read} sowie
+\texttt{java.awt.Image} bzw. \texttt{java.awt.image.BufferedImage}.
+
 Um Tastatur- und Mauseingaben zu verarbeiten sowie Grafik
 anzuzeigen, wird das \texttt{Java Swing Framework} verwendet.
 
