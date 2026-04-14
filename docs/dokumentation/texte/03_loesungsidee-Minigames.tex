@@ -1,88 +1,294 @@
 Jedes Minispiel ist aus drei Leveln aufgebaut, welche progressiv schwerer werden.
 So dient das erste Level als Einführung in die Mechaniken des jeweiligen Minispiels.
-Das zweite Level kann als \glqq standard\grqq\ Schwierigkeitsgrad verstanden werden und im Dritten können die Spielenden dann ihre erlernten Fähigkeiten in schwierigen Herausforderungen unter Beweis stellen.
-Nach dem erfolgreichen Beenden eines Levels erhält die Spielfigur ein Item, welches dann im Kamp verwendet werden kann.
-Diese Items hängen von der Fachschaft und des Schwierigkeitsgrades ab.
-Die Stärke der Items skaliert also mit der Schwierigkeit des beendeten Levels, da das Bearbeiten schwererer Level länger dauert wird dies dementsprechend belohnt.\\
+Das zweite Level kann als \glqq standard\grqq{}-Schwierigkeitsgrad verstanden werden und im Dritten können die Spielenden dann ihre erlernten Fähigkeiten in schwierigen Herausforderungen unter Beweis stellen.
+Nach dem erfolgreichen Beenden eines Levels erhält die Spielfigur ein Item, welches dann im Kampf verwendet werden kann.
+Diese Items hängen von der Fachschaft und dem Schwierigkeitsgrad ab.
+Die Stärke der Items skaliert also mit der Schwierigkeit des beendeten Levels. 
+Da das Bearbeiten schwererer Level länger dauert, wird dies dementsprechend belohnt.\\
 Im Allgemeinen soll jedes Minispiel mit einer Auswahl des Schwierigkeitsgrades beginnen, welche auch wieder verlassen werden kann, wenn sich doch gegen das Spielen entschieden wird.
-Jedes Level bietet zusätzlich noch die Möglichkeit zur Auswahl zurückzukehren.
-Nach dem Abschließen des selbigen ist es ebenfalls möglich das Level neu zu starten.
+Jedes Level bietet zusätzlich noch die Möglichkeit, zur Auswahl zurückzukehren.
+Nach dem Abschließen des selbigen ist es ebenfalls möglich, das Level neu zu starten.
 
 
 \subsection{Informatik}
 
-Die Level der Fachschaft Informatik bestehen jeweils aus einem Schaltkreis, bei dem Logikgatter fehlen und einer bestimmten Menge ebendieser, aus denen die richtigen ausgewählt werden müssen.
+Die Level der Fachschaft Informatik bestehen jeweils aus zwei wesentlichen
+Komponenten: Zunächst gibt es einen Schaltkreis, welcher aus Tastern, mit \glqq{}?\grqq{} verdeckten Logikgattern sowie Lämpchen aufgebaut ist. Die zweite Komponente bilden verschiedene Logikgatter, aus welchen das im Schaltkreis verdeckte bzw. die
+im Schaltkreis verdeckten ausgewählt werden müssen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{bilder/MinispielInformatik.png}
+	\caption{Level 2 des Minispiels der Fachschaft Informatik}
+	\label{fig:mginf}
+\end{figure}
+
+
 Verschiedene Schwierigkeiten werden auf zwei Weisen ermöglicht:
 
 \begin{itemize}
-    \item[] Zum einen verändert sich die Anzahl an Logikgattern, aus denen ausgewählt werden kann.
-            So sind es im ersten Level 4 Logikgatter, im zweiten Level 5 Logikgatter und im dritten Level 6 Logikgatter, die zur Auswahl zur Verfügung stehen.
-    \item[] Zum anderen ändert sich der Schaltkreis, bei dem die Gatter entfernt wurden, sowie die Anzahl an entfernten Gattern.
-            Im ersten Level fehlt genau eines, welches zwei Eingänge mit einem Ausgang verbindet.
-            Außerdem sind hier alle vier Zustände der Eingänge mit dem jeweiligen Zustand des Ausgangs als Abbildungen dargestellt.
-            Es ist also ein Logikgatter $G$ gesucht welches folgende Bedingungen erfüllt:
+    \item Die Anzahl an Logikgattern, aus denen ausgewählt werden kann, erhöht sich mit jedem Schwierigkeitsgrad.
+            So sind es im ersten Level 4, im zweiten Level 5 und im dritten Level 6 Logikgatter, welche zur Auswahl stehen.
+    \item Die Komplexität des Schaltkreises sowie die Anzahl an verdeckten Gattern ändern sich dem Schwierigkeitsgrad entsprechend.
 \end{itemize}
 
-Jedes Level verwendet außerdem, im Sinne der Variabilität, drei verschiedene Schaltkreise, aus denen, bei jedem Minispiel-Start, einer zufällig gewählt wird.
+Jedes Level verwendet außerdem, im Sinne der Variabilität, drei verschiedene Schaltkreise, aus denen bei jedem Minispiel-Start einer zufällig gewählt wird.
 
 \subsubsection{Level 1}
 
-Bei den Schaltkreisen des ersten Levels fehlt jeweils nur ein Logikgatter, welches zwei Eingänge mit einem Ausgang verbindet.
-Gesucht wird also das Logikgatter $G \in \{\land , \lor , \overline{\land}, \overline{\lor}, \veebar, \overline{\veebar}\}$, welches folgende Bedingungen erfüllt:
+Bei den Schaltkreisen des ersten Levels fehlt jeweils nur ein Logikgatter, das zwei Eingänge mit einem Ausgang verbindet.
+Gesucht wird also das Logikgatter $G \in \{\land , \lor , \overline{\land}, \overline{\lor}, \veebar, \overline{\veebar}\}$\footnote{$\land = AND,\ \lor = OR,\ \overline{\land} = NAND,\ \overline{\lor} = NOR,\ \veebar = XOR,\ \overline{\veebar} = XNOR$}, welches folgende Bedingungen erfüllt:
 
 \begin{align*}
     x_1 G x_2 = y
 \end{align*}
 
-Dadurch, dass der Schaltkreis zwei Eingänge und einen Ausgang beitzt, ergeben sich vier mögliche Zustände, die in Form einer Wahrheitswerttabelle dargestellt werden können.
+Dadurch, dass jeder Schaltkreis zwei Eingänge und einen Ausgang besitzt, ergeben sich vier mögliche Zustände, die in Form einer Wahrheitswerttabelle dargestellt werden können.
 Für die Rätsel des ersten Levels wurden folgende Tabellen festgelegt:
 
-\begin{tabular}{|c|c|c|} 
-    \hline
-    $x_1$ & $x_2$ & $y$ \\
-    \hline\hline
-    $0$ & $0$ & $0$ \\
-    $0$ & $1$ & $0$ \\
-    $1$ & $0$ & $0$ \\
-    $1$ & $1$ & $1$ \\
-    \hline
-\end{tabular}
+\begin{table}[H]
+    \centering
+    \begin{minipage}{.33\textwidth}
+        $G = \land$\\
+        \vfill
+        \begin{tabular}{|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $y$ \\
+            \hline\hline
+            $0$ & $0$ & $0$ \\
+            $0$ & $1$ & $0$ \\
+            $1$ & $0$ & $0$ \\
+            $1$ & $1$ & $1$ \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.32\textwidth}
+        $G = \lor$\\
+        \vfill
+        \begin{tabular}{|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $y$ \\
+            \hline\hline
+            $0$ & $0$ & $0$ \\
+            $0$ & $1$ & $1$ \\
+            $1$ & $0$ & $1$ \\
+            $1$ & $1$ & $1$ \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.33\textwidth}
+        $G = \overline{\land}$\\
+        \vfill
+        \begin{tabular}{|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $y$ \\
+            \hline\hline
+            $0$ & $0$ & $1$ \\
+            $0$ & $1$ & $1$ \\
+            $1$ & $0$ & $1$ \\
+            $1$ & $1$ & $0$ \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \caption{Wahrheitswerttabellen für Level 1 des Informatik-Minispiels}
+    \label{tab:wwt01}
+\end{table}
 
-\begin{tabular}{|c|c|c|} 
-    \hline
-    $x_1$ & $x_2$ & $y$ \\
-    \hline\hline
-    $0$ & $0$ & $0$ \\
-    $0$ & $1$ & $1$ \\
-    $1$ & $0$ & $1$ \\
-    $1$ & $1$ & $1$ \\
-    \hline
-\end{tabular}
+Diese Tabellen werden den Spielenden, aufgrund der ansprechenderen Gestaltung, in Form einer Abbildung präsentiert, welche die vier Zustände des Schaltkreises darstellt.
+Ebenfalls im Sinne der Gestaltung wurde auf die Konvention, die Eingänge auf der linken Seite und die Ausgänge auf der rechten Seite darzustellen, verzichtet.
+In der Abbildung \ref{fig:mginf} ist dies beispielhaft anhand eines Rätsels des zweiten Levels zu erkennen.
 
-\begin{tabular}{|c|c|c|} 
-    \hline
-    $x_1$ & $x_2$ & $y$ \\
-    \hline\hline
-    $0$ & $0$ & $1$ \\
-    $0$ & $1$ & $1$ \\
-    $1$ & $0$ & $1$ \\
-    $1$ & $1$ & $0$ \\
-    \hline
-\end{tabular}
+\subsubsection{Level 2}
 
-Endgültige Liste einzigartiger Y-Vektoren mit Kombinationen:
+Im zweiten Level bestehen die Schaltkreise ebenfalls aus zwei Eingängen, sowie einem Ausgang.
+Der Unterschied zu Level 1 besteht hierbei darin, dass zwei Logikgatter entfernt wurden.
+Durch das erste werden beide Eingänge verbunden.
+Der dadurch resultierende Ausgang wird im zweiten Logikgatter wieder mit einem der Eingänge verbunden, wodurch der finale Ausgang entsteht.
+Außerdem wurde zur Reduzierung der Komplexitität die Einschränkung hinzugefügt, dass sich die Gatter unterscheiden müssen.
+Gesucht werden also die Logikgatter $G_1, G_2 \in \{\land , \lor , \overline{\land}, \overline{\lor}, \veebar, \overline{\veebar}\}$, welche folgende Bedingungen erfüllen:
 
-    AND → NAND : 1,1,1,0
-    AND → NOR : 1,0,1,0
-    AND → XNOR : 1,0,1,1
-    OR → XOR : 0,0,1,0
-    OR → XNOR : 1,1,0,1
-    NAND → AND : 1,1,0,0
-    NAND → OR : 1,1,1,1
-    NAND → NOR : 0,0,0,1
-    NOR → AND : 1,0,0,0
-    NOR → XNOR : 0,1,1,1
-    XOR → AND : 0,1,0,0
-    XOR → NAND : 1,0,1,1
-    XOR → XNOR : 1,0,0,1
-    XNOR → NAND : 0,1,1,0
+\begin{align*}
+    (x_1 G_1 x_2) G_2 x_2 &= y\\
+    G_1 &\neq G_2
+\end{align*}
+
+Dadurch, dass jeder Schaltkreis auch im zweiten Level zwei Eingänge und einen Ausgang besitzt, ergeben sich wieder vier mögliche Zustände, die in Form einer Wahrheitswerttabelle dargestellt werden können.
+Für die Rätsel des zweiten Levels wurden folgende Tabellen festgelegt:
+
+\begin{table}[h!]
+    \centering
+    \begin{minipage}{.33\textwidth}
+        $G_1 = \land$\\
+        $G_2 = \overline{\lor}$
+        \vfill
+        \begin{tabular}{|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $y$ \\
+            \hline\hline
+            $0$ & $0$ & $1$ \\
+            $0$ & $1$ & $0$ \\
+            $1$ & $0$ & $1$ \\
+            $1$ & $1$ & $0$ \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.32\textwidth}
+        $G_1 = \lor$\\
+        $G_2 = \veebar$
+        \vfill
+        \begin{tabular}{|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $y$ \\
+            \hline\hline
+            $0$ & $0$ & $0$ \\
+            $0$ & $1$ & $0$ \\
+            $1$ & $0$ & $1$ \\
+            $1$ & $1$ & $0$ \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.33\textwidth}
+        $G_1 = \overline{\land}$\\
+        $G_2 = \lor$
+        \vfill
+        \begin{tabular}{|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $y$ \\
+            \hline\hline
+            $0$ & $0$ & $1$ \\
+            $0$ & $1$ & $1$ \\
+            $1$ & $0$ & $1$ \\
+            $1$ & $1$ & $1$ \\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \caption{Wahrheitswerttabellen für Level 2 des Informatik-Minispiels}
+    \label{tab:wwt02}
+\end{table}
+
+Diese Tabellen werden analog zu Level 1 als Abbildungen dargestellt.
+
+\subsubsection{Level 3}
+
+Im dritten Level bestehen die Schaltkreise aus drei Eingängen, einem Ausgang und drei entfernten Logikgattern.
+Durch die ersten beiden werden jeweils zwei der Eingänge miteinander verbunden.
+Die dadurch resultierenden Ausgänge werden im dritten Logikgatter verbunden, wodurch der finale Ausgang entsteht.
+Gesucht werden also die Logikgatter $G_1, G_2, G_3 \in \{\land , \lor , \overline{\land}, \overline{\lor}, \veebar, \overline{\veebar}\}$, welche folgende Bedingungen erfüllen:
+
+\begin{align*}
+    (x_1 G_1 x_2) G_3 (x_2 G_2 x_3) &= y\\
+    G_1 \neq G_2 &\neq G_3 
+\end{align*}
+
+Dadurch, dass jeder Schaltkreis aus drei Eingänge und einen Ausgang besteht, ergeben sich insgesamt acht mögliche Zustände, die in Form einer Wahrheitswerttabelle dargestellt werden können.
+Für die Rätsel des dritten Levels wurden folgende Tabellen festgelegt:
+
+\begin{table}[h!]
+    \centering
+    \begin{minipage}{.33\textwidth}
+        $G_1 = \land$\\
+        $G_2 = \veebar$\\
+        $G_3 = \lor$
+        \vfill
+        \begin{tabular}{|c|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $x_3$ & $y$\\
+            \hline\hline
+            $0$ & $0$ & $0$ & $0$\\
+            $0$ & $0$ & $1$ & $1$\\
+            $0$ & $1$ & $0$ & $1$\\
+            $0$ & $1$ & $1$ & $0$\\
+            $1$ & $0$ & $0$ & $0$\\
+            $1$ & $0$ & $1$ & $1$\\
+            $1$ & $1$ & $0$ & $1$\\
+            $1$ & $1$ & $1$ & $1$\\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.32\textwidth}
+        $G_1 = \overline{\veebar}$\\
+        $G_2 = \land$\\
+        $G_3 = \lor$
+        \vfill
+        \begin{tabular}{|c|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $x_3$ & $y$\\
+            \hline\hline
+            $0$ & $0$ & $0$ & $1$\\
+            $0$ & $0$ & $1$ & $1$\\
+            $0$ & $1$ & $0$ & $0$\\
+            $0$ & $1$ & $1$ & $1$\\
+            $1$ & $0$ & $0$ & $0$\\
+            $1$ & $0$ & $1$ & $0$\\
+            $1$ & $1$ & $0$ & $1$\\
+            $1$ & $1$ & $1$ & $1$\\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{.33\textwidth}
+        $G_1 = \veebar$\\
+        $G_2 = \lor$\\
+        $G_3 = \land$
+        \vfill
+        \begin{tabular}{|c|c|c|c|} 
+            \hline
+            $x_1$ & $x_2$ & $x_3$ & $y$\\
+            \hline\hline
+            $0$ & $0$ & $0$ & $0$\\
+            $0$ & $0$ & $1$ & $0$\\
+            $0$ & $1$ & $0$ & $1$\\
+            $0$ & $1$ & $1$ & $1$\\
+            $1$ & $0$ & $0$ & $0$\\
+            $1$ & $0$ & $1$ & $1$\\
+            $1$ & $1$ & $0$ & $0$\\
+            $1$ & $1$ & $1$ & $0$\\
+            \hline
+        \end{tabular}
+    \end{minipage}
+    \caption{Wahrheitswerttabellen für Level 3 des Informatik-Minispiels}
+    \label{tab:wwt03}
+\end{table}
+
+Da die Wahrheitswerttabellen des dritten Levels acht Zustände beinhalten, wird auf die Darstellung jedes einzelnen Zustandes verzichtet und nur der erste Zustand als Schaltkreis abgebildet.
+Die anderen werden als Tabelle präsentiert.
+
+\subsubsection{Reflexion}
+
+Bei dem Minispiel der Fachschaft Informatik wird die Theorie spielerisch mit der Praxis verbunden.
+Die Spielenden werden mit abstrakten boolschen Operationen sowie mit erwarteten Ergebnissen konfrontiert und können ihre Überlegungen dann anhand von Logikgattern und Schaltkreisen in die Tat umsetzten.
+Es fördert vor allem logisches Denken, jedoch auch die Fähigkeit, mit begrenzten Mitteln ein gewünschtes Ergebnis zu erziehlen.
+Außerdem regen die Rätsel durch ihre Komplexitität dazu an, Lösungsstrategien zu entwickeln, anstatt Antwortmöglichkeiten einfach auszuprobieren oder gar zu raten.\\
+Das erste Level bietet einen guten Einstieg in die Funktionsweise des Spieles, da hier nur die Eigenschaften der einzelnen Gatter abgefragt und diese noch nicht verkettet werden.
+Der Schwierigkeitsgrad nimmt im zweiten Level deutlich zu, jedoch kann hier durch Überlegungen, die zur Vereinfachungen des Problemes führen\footnote{Beispielsweise folgende Aussage: \glqq Der Ausgang ist in jedem Fall gleich Eingang 1.\grqq} dennoch gut eine Lösung gefunden werden.
+Das dritte Level ist sehr komplex.
+Es verlangt das Verbinden dreier Gatter miteinander, was definitiv über den Rahmen eines schnellen Minispiels hinausreicht.
+Hier kann zwar analog zu Level 2 vereinfacht werden, jedoch bleibt das Problem dadurch dennoch sehr schwierig.
+Eine Mögliche Lösung wäre das Vorgeben eines oder mehrerer Gatter, ähnlich zum in \ref{sec:mathematics} beschriebenen Mathe-Minispiel.
+Auch denkbar wäre eine Einschränkung der Antwortmöglichkeiten.
+So könnten die richtigen Gatter schon gegeben sein, müssten jedoch noch an die richtige Stelle plaziert werden.\\
+Das Minispiel birgt neben der Schwierigkeit auch anderweitig Potential zur Verbesserung.
+Die Grafiken der Logikgatter sind schwer zuzuordnen und setzten die Kenntnis ihrer Funktionsweise vorraus.
+Dies könnte mit kleinen Erklärtexten oder Beispielabbildungen behoben werden.
+Zusätzlich ist das wiederholte Spielen nur begrenzt möglich.
+Zwar bieten die verschiedenen Schaltkreise Variabilität, jedoch ist diese aufgrund der Menge an Rätseln sehr eingeschränkt.
+Die insgesamt neun Schaltkreise können schnell auswendig gelernt werden, wodurch das Spiel seine Tiefe verliert.
+Dies könnte möglicherweise mit zufällig generierten Wahrheitswerttabellen behoben werden.
+Jedoch ist dabei zu beachten, dass viele Tabellen keine oder mehrere Lösungen für den gegebenen Aufbau besitzen.
+Es würde sich eher anbieten das Grundkonzept zu überarbeiten, da dieses generell wenig Variabilität bietet.
+
+\subsection{Mathematik}
+\label{sec:mathematics}
+
+\subsubsection{Level 1}
+
+\subsubsection{Level 2}
+
+\subsubsection{Level 3}
+
+\subsubsection{Reflexion}
