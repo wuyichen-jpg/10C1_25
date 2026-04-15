@@ -66,10 +66,7 @@ public class MinigameEndScene extends BaseScene {
         objects.add(menuButton);
 
         ButtonObject exitButton = new ButtonObject(Images.get("/assets/minigames/general/button_exit.png"), () -> {
-            // MinigameEndScene
-            SceneStack.INSTANCE.pop();
-            // LevelScene
-            SceneStack.INSTANCE.pop();
+            Minigames.resetMinigameLevel(level, false);
             // LevelSelectorScene
             SceneStack.INSTANCE.pop();
         });
