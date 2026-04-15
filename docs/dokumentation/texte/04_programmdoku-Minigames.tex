@@ -1,0 +1,89 @@
+Da die Minispiele alle einem ähnlichen Grundaufbau folgen, bietet es sich an, diesen objektorientiert und modular zu implementieren, um Redundanz zu vermeiden.
+Dieser Grundaufbau besteht aus folgenden Klassen:
+
+\begin{itemize}
+    \item \texttt{LevelScene}
+    \item \texttt{LevelSelectorScene}
+    \item \texttt{MinigameEndScene}
+    \item \texttt{Minigames}
+\end{itemize}
+
+\paragraph{LevelScene} Diese abstrakte Klasse ist eine Erweiterung der \texttt{BaseScene} und stellt Fachschaft übergreifende Variablen und Methoden zur Verfügung.
+Sie beinhaltet:
+
+\begin{sloppypar}
+    \begin{itemize}
+        \item \texttt{REWARD}: Ein \texttt{ItemObject}, welches die Spielen nach erfolgreichendem Beenden des Levels erhalten.
+            Es wird mit Hilfe der Funktion \texttt{getMinigameReward} der \texttt{ItemObject}-Klasse generiert.
+        \item Ein \texttt{BackdropObject} welches das zur Fachschaft gehörende Hintergrundbild beinhaltet.
+        \item \texttt{exitButton}: Ein \texttt{ButtonObject}, welches das Verlassen des Minispiels mittels Entfernung der obersten zwei Scenen des \texttt{SceneStack} (\texttt{LevelScene} und \texttt{LevelSelectorScene}) ermöglicht.
+        \item \texttt{menuButton}: Ein \texttt{ButtonObject}, welches die Rückkehr zur Level-Auswahl mittels Entfernung der obersten Scene des \texttt{SceneStack} (\texttt{LevelScene}) ermöglicht.
+        \item \texttt{reset()}: Eine abstrakte Funktion, welche das Zurücksetzten eines Levels ermöglichen soll.
+            Dafür wird sie von den Leveln der Fachschaften implementiert, welche dann je nach Minispiel eine komplett neue Instanz erstellen, oder nur einzelne Elemente neu generieren.
+        \item \texttt{levelWon()}: Eine Prozedur, wodurch eine Instanz der \texttt{MinigameEndScene} auf den \texttt{SceneStack} gepushed wird und \texttt{REWARD} in das Inventar der Spielfigur übergeben wird.
+        \item \texttt{levelLost()}: Eine Prozedur, wodurch eine Instanz der \texttt{MinigameEndScene} auf den \texttt{SceneStack} gepushed wird.
+        \item \texttt{LevelScene(Department department, int level)}: Der Konstruktor der Klasse, welcher mit Hilfe seiner Parameter das Hintergrundbild lädt und die Knöpfe platziert.
+    \end{itemize}
+\end{sloppypar}
+
+\paragraph{LevelSelectorScene} Diese Klasse ist eine Erweiterung der \texttt{BaseScene} und verknüpft, neben anderen Funktionen, jeweils drei \texttt{LevelScenes} miteinander.
+Sie beinhaltet:
+
+\begin{sloppypar}
+    \begin{itemize}
+        \item \texttt{LEVELS}: Ein \texttt{LevelScene}-Array, welches die drei Level beinhaltet.
+        \item Ein \texttt{BackdropObject} welches das Hintergrundbild beinhaltet.
+        \item \texttt{exitButton}: Ein \texttt{ButtonObject}, welches das Verlassen des Minispiels mittels Entfernung der obersten zwei Scenen des \texttt{SceneStack} (\texttt{LevelScene} und \texttt{LevelSelectorScene}) ermöglicht.
+        \item \texttt{buttonLevel1}: Ein \texttt{ButtonObject}, welches die erste in \texttt{LEVELS} gespeicherte \texttt{LevelScene} auf den \texttt{SceneStack} pushed.
+        \item \texttt{buttonLevel2}: Ein \texttt{ButtonObject}, welches die zweite in \texttt{LEVELS} gespeicherte \texttt{LevelScene} auf den \texttt{SceneStack} pushed.
+        \item \texttt{buttonLevel3}: Ein \texttt{ButtonObject}, welches die dritte in \texttt{LEVELS} gespeicherte \texttt{LevelScene} auf den \texttt{SceneStack} pushed.
+        \item \texttt{LevelSelectorScene(LevelScene level1, LevelScene level2, LevelScene level3)}: Der Konstruktor der Klasse, welcher mit Hilfe seiner Parameter das Hintergrundbild lädt und die Knöpfe platziert.
+    \end{itemize}
+\end{sloppypar}
+
+\paragraph{MinigameEndScene} Diese Klasse ist eine Erweiterung der \texttt{BaseScene} und ist für das Ende eines Levels zuständig.
+Sie beinhaltet:
+
+\begin{sloppypar}
+    \begin{itemize}
+        \item Ein \texttt{BackdropObject} welches einen schwarzen, semi-transparenten Hintergrund beinhaltet, um das Level zu verdunkeln.
+        \item \texttt{banner}: Ein \texttt{BaseObject}, welches entweder den Schriftzug \glqq GEWONNEN\grqq{} oder \glqq VERLOREN\grqq{} darstellt.
+        \item \texttt{rewardContainer}: Ein \texttt{BaseObject}, welches als Rahmen für das gewonnene Item dient.
+            Es wird nur gezeichnet, falls das Level gewonnen wurde.
+        \item \texttt{rewardItem}: Ein \texttt{BaseObject}, welches das gewonnene Item darstellt.
+            Es wird nur gezeichnet, falls das Level gewonnen wurde.
+        \item \texttt{exitButton}: Ein \texttt{ButtonObject}, welches das Level mittels der Prozedur \texttt{resetMinigameLevel} der \texttt{Minigames}-Klasse, auf die später noch einmal eingengangen wird, ohne es direkt neu zu starten zurücksetzt und das Minispiel mittels Entfernung der obersten Scene des \texttt{SceneStack} (nach Zurücksetzen: \texttt{LevelSelectorScene}) verlässt.
+        \item \texttt{menuButton}: Ein \texttt{ButtonObject}, welches das Level mittels der Prozedur \texttt{resetMinigameLevel} der \texttt{Minigames}-Klasse ohne es direkt neu zu starten zurücksetzt..
+        \item \texttt{retryButton}: Ein \texttt{ButtonObject}, welches das Level mittels der Prozedur \texttt{resetMinigameLevel} der \texttt{Minigames}-Klasse zurücksetzt.
+        \item \texttt{MinigameEndScene(boolean won, int level, ItemObject reward)}: Der Konstruktor der Klasse, welcher mit Hilfe seiner Parameter das Hintergrundbild, das Banner und gegebenenfalls die Belohnung lädt, sowie die Knöpfe platziert.
+    \end{itemize}
+\end{sloppypar}
+
+\paragraph{Minigames} Diese Klasse ist statisch und stellt Methoden zum Starten und Zurücksetzen der Minispiele zur Verfügung.
+Sie beinhaltet:
+
+\begin{sloppypar}
+    \begin{itemize}
+        \item \texttt{generateMinigame(Department department)}: Eine Funktion, welche abhängig von der als Parameter gegebenen Fachschaft eine \texttt{LevelSelectorScene} mit den passenden Leveln zurückgibt.
+        \item \texttt{resetMinigameLevel(int level, boolean autoRetry)}: Eine Prozedur, welche die obersten zwei Scene des \texttt{SceneStack} (\texttt{MinigameEndScene} und \texttt{LevelScene}, da diese Funktion nur nach dem Beenden eines Minispieles aufgerufen wird) entfernt und das als Parameter gegebene Level der jetzt oben liegenden \texttt{LevelSelectorScene} mittels der \texttt{reset}-Funktion des Levels zurücksetzt.
+            Falls der Parameter \texttt{autoRetry} wahr ist, wird zusätzlich das zurückgesetzte Level auf den \texttt{SceneStack} gepushed.
+        \item \texttt{Minigames}: Der Konstruktor der Klasse, welcher als \texttt{private} deklariet ist, da er nicht aufgerufen werden soll.
+    \end{itemize}
+\end{sloppypar}
+
+Um also ein Minispiel für eine Fachschaft zu implementieren müssen folgende Dinge geschehen:
+
+
+\begin{sloppypar}
+    \begin{enumerate}
+        \item Erweiterung der \texttt{LevelScene}, um die Funktionsweise des Spieles zu implementieren.
+        \item Hinzufügen von weiteren Klassen oder Resourcen, die von der erweiterten \texttt{LevelScene} benötigt werden.
+        \item Hinzufügen eines \texttt{ButtonObject} in der, den Raum der Fachschaft repräsentierenden, Scene (beispielsweise \texttt{MatheraumScene}), welcher die von \texttt{Mingames::generateMinigame} erstellte \texttt{LevelSelectorScene} auf den \texttt{SceneStack} pushed.
+    \end{enumerate}
+\end{sloppypar}
+
+In den folgenden Abschnitten sind diese fachschaftspezifischen Erweiterungen erklärt.
+
+\subsubsection{Informatik}
+
+\subsubsection{Mathematik}
