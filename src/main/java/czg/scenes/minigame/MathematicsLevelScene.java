@@ -14,13 +14,17 @@ import java.util.Arrays;
  * gelegt werden muss
  */
 public class MathematicsLevelScene extends LevelScene {
-
     private final TangramPieceObject[] PIECES;
     private final MathematicsPuzzle PUZZLE;
     private final int PUZZLE_X;
     private final int PUZZLE_Y;
     private final int PUZZLE_WIDTH;
     private final int PUZZLE_HEIGHT;
+
+    /**
+     * Ob in der Szene ein Tangram-Stein gezogen wird
+     */
+    public boolean isDragging = false;
 
     /**
      * Neue Level-Szene erstellen
@@ -33,10 +37,12 @@ public class MathematicsLevelScene extends LevelScene {
         // Puzzles wählen
         this.PUZZLE = MathematicsPuzzle.getPuzzle(level);
 
-        BaseObject puzzleObject = new BaseObject(PUZZLE.sprite, 0, 0);
+        BaseObject puzzleObject = new BaseObject(PUZZLE.SPRITE, 0, 0);
 
+        // Skalierungsfaktor der Steine und somit auch des Puzzles berechnen
         double scale = Images.get("/assets/minigames/mathematics/tangram_packed.png").getWidth(null) / (double) (MainWindow.HEIGHT/2);
 
+        // Puzzle skalieren
         puzzleObject.width = (int) (puzzleObject.width * scale);
         puzzleObject.height = (int) (puzzleObject.height * scale);
 
@@ -76,7 +82,7 @@ public class MathematicsLevelScene extends LevelScene {
      * dies der Fall, wird {@link #levelWon()} aufgerufen.
      */
     public void checkPuzzle() {
-        if(PUZZLE.isSolutionValid(PIECES, PUZZLE_X, PUZZLE_Y, PUZZLE_WIDTH, PUZZLE_HEIGHT)) {
+        if(PUZZLE.isSolutionValid(PUZZLE_X, PUZZLE_Y, PUZZLE_WIDTH)) {
             levelWon();
         }
     }

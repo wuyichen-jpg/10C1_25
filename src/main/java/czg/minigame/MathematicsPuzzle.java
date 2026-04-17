@@ -1,10 +1,11 @@
 package czg.minigame;
 
+import czg.MainWindow;
 import czg.objects.minigame.TangramPieceObject;
-import czg.scenes.minigame.MathematicsLevelScene;
 import czg.util.Images;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
@@ -188,7 +189,7 @@ public enum MathematicsPuzzle {
     /**
      * Die möglichen Tangram-Formen für jedes Level
      */
-    public static final MathematicsPuzzle[][] PUZZLES = {
+    private static final MathematicsPuzzle[][] PUZZLES = {
         {
             MathematicsPuzzle.P_00,
             MathematicsPuzzle.P_01,
@@ -205,31 +206,30 @@ public enum MathematicsPuzzle {
     };
 
     /**
-     * Wie weit ein Tangram-Teil von seiner korrekten
-     * Position entfernt sein darf und trotzdem noch als
-     * richtig angesehen wird
-     */
-    public static final int MARGIN_OF_ERROR = 20;
-
-    /**
      * Form der Lösung
      */
-    public final Image sprite;
+    public final Image SPRITE;
+
+    /**
+     * Wie viel Prozent des Puzzles unbedeckt bleiben darf,
+     * damit es trotzdem als gelöst gilt
+     */
+    private static final double MARGIN_OF_ERROR = 0.025;
 
     /**
      * Wie viele Teile vorgegeben sind
      */
-    public final int amountOfGivenPieces;
+    private final int AMOUNT_OF_GIVEN_PIECES;
 
     /**
      * Mögliche Lösungen
      */
-    public final double[][][] solutions;
+    private final double[][][] SOLUTIONS;
 
     MathematicsPuzzle(String path, int amountOfGivenPieces, double[][][] solutions) {
-        this.sprite = Images.get(path);
-        this.amountOfGivenPieces = amountOfGivenPieces;
-        this.solutions = solutions;
+        this.SPRITE = Images.get(path);
+        this.AMOUNT_OF_GIVEN_PIECES = amountOfGivenPieces;
+        this.SOLUTIONS = solutions;
     }
 
     /**
@@ -248,103 +248,116 @@ public enum MathematicsPuzzle {
 
     /**
      * Prüft, ob die Tangram-Teile richtig gelegt wurden
-     * @param pieces Die Tangram-Teile in der {@link MathematicsLevelScene}
      * @param x X-Koordinate des Puzzle-Bereichs
      * @param y Y-Koordinate des Puzzle-Bereichs
      * @param width Breite des Puzzle-Bereichs
-     * @param height Höhe des Puzzle-Bereichs
      * @return Ob die Form richtig gelegt wurde
      */
-    public boolean isSolutionValid(TangramPieceObject[] pieces, int x, int y, int width, int height) {
-        for(double[][] solution : solutions) {
-            // Große Dreiecke
-            boolean normal =
-                matches(pieces[0], solution[0], 0.0, x, y, width, height) &&
-                matches(pieces[1], solution[1], 0.0, x, y, width, height);
+    public boolean isSolutionValid(int x, int y, int width) {
+        // Initialisierung des BufferedImage des Steines
+        BufferedImage bufferedSprite = (BufferedImage) SPRITE;
 
-            boolean swapped =
-                matches(pieces[0], solution[1], -90.0, x, y, width, height) &&
-                matches(pieces[1], solution[0], 90.0, x, y, width, height);
+        // Initialisierung des BufferedImage des Fensters
+        BufferedImage bufferedMainWindow = new BufferedImage(MainWindow.WIDTH, MainWindow.HEIGHT, bufferedSprite.getType());
 
-            if(!(normal || swapped)) continue;
+        Graphics2D g2d = bufferedMainWindow.createGraphics();
+        MainWindow.INSTANCE.paint(g2d);
+        g2d.dispose();
 
-            // Mittleres Dreieck
-            if(!matches(pieces[2], solution[2], 0.0, x, y, width, height)) continue;
+        // Skalierungsfaktor des Bildes
+        double spriteScale = (double) width / bufferedSprite.getWidth();
 
-            // Kleine Dreiecke
-            normal =
-                matches(pieces[3], solution[3], 0.0, x, y, width, height) &&
-                matches(pieces[4], solution[4], 0.0, x, y, width, height);
+        // Berechnung der Anzahl an gesamten, sowie verdeckten Pixeln
+        double amountOfPixel = 0;
+        double amountOfCoveredPixel = 0;
+        for (int row = 0; row < bufferedSprite.getHeight(); row++) {
+            for (int col = 0; col < bufferedSprite.getWidth(); col++) {
+                // Transparente Pixel werden übersprungen
+                int alpha = (bufferedSprite.getRGB(col, row) & 0xff000000) >>> 24;
+                if (alpha == 0) continue;
 
-            swapped =
-                matches(pieces[3], solution[4], -90.0, x, y, width, height) &&
-                matches(pieces[4], solution[3], 90.0, x, y, width, height);
+                // Berechnung der Fenster-Koordinaten des aktuellen Pixels
+                int px = (int) (x + col*spriteScale);
+                int py = (int) (y + row*spriteScale);
 
-            if(!(normal || swapped)) continue;
+                // Falls der Pixel im Bild eine andere Farbe als im Fenster hat, bedeutet das er ist verdeckt.
+                if (bufferedSprite.getRGB(col, row) != bufferedMainWindow.getRGB(px, py)) amountOfCoveredPixel++;
 
-            // Parallelogramm
-            pieces[5].rotation %= 180;
-            if(!matches(pieces[5], solution[5], 0.0, x, y, width, height)) continue;
-
-            // Quadrat
-            pieces[6].rotation %= 90;
-            if(!matches(pieces[6], solution[6], 0.0, x, y, width, height)) continue;
-            
-            return true;
+                amountOfPixel++;
+            }
         }
-        
-        return false;
+
+        // Rückgabe, ob genug Pixel verdeckt sind
+        return amountOfCoveredPixel / amountOfPixel > 1-MARGIN_OF_ERROR;
     }
 
-    private boolean matches(TangramPieceObject piece, double[] solution, double rotOffset, int x, int y, int width, int height) {
-        double expectedRotation = (solution[2] + rotOffset) % 360;
-        if (expectedRotation < 0) expectedRotation += 360.0;
-
-        return Math.abs(piece.x - (x + solution[0]*width)) <= MARGIN_OF_ERROR &&
-                Math.abs(piece.y - (y + solution[1]*height)) <= MARGIN_OF_ERROR &&
-                piece.rotation == expectedRotation;
-    }
-    
+    /**
+     * Zufällig ausgewählte, vorgegebene Steine platzieren
+     * @param pieces Array, das alle Tangram-Steine enthält
+     * @param x X-Position des Puzzles
+     * @param y Y-Position des Puzzles
+     * @param width Breite des Puzzles
+     * @param height Höhe des Puzzles
+     */
     private void setGivenPieces(TangramPieceObject[] pieces, int x, int y, int width, int height) {
-        int[] idx = new int[amountOfGivenPieces];
-        for(int i = 0; i < amountOfGivenPieces; i++) {
+        // Initialisierung eines Index-Arrays mit Platzhalter-Werten
+        int[] idx = new int[AMOUNT_OF_GIVEN_PIECES];
+        for(int i = 0; i < AMOUNT_OF_GIVEN_PIECES; i++) {
             idx[i] = -1;
         }
-        
-        for(int i = 0; i < amountOfGivenPieces; i++) {
+
+        // Generierung der zufälligen Indizes der vorzugebenden Steine
+        for(int i = 0; i < AMOUNT_OF_GIVEN_PIECES; i++) {
             int rIdx;
+            // Neuer zufälliger Index, solange der alte bereits generiert wurde
             while(true) {
                 rIdx = new Random().nextInt(7);
-                boolean validIdx = true;
-                for(int j = 0; j < amountOfGivenPieces; j++) {
-                    if (idx[j] == rIdx) {
-                        validIdx = false;
+                boolean used = false;
+                for(int j : idx) {
+                    if (j == rIdx) {
+                        used = true;
                         break;
                     }
                 }
-                if(validIdx) break;
+
+                if (!used) break;
             }
             idx[i] = rIdx;
         }
-        
-        int rSolution = new Random().nextInt(solutions.length);
+        // Festlegen einer Lösung des Puzzles
+        int rSolution = new Random().nextInt(SOLUTIONS.length);
+        // Positionierung der Steine
         for(int i : idx) {
-            pieces[i].setRotation(solutions[rSolution][i][2]);
-            pieces[i].x = (int) (x + solutions[rSolution][i][0]*width);
-            pieces[i].y = (int) (y + solutions[rSolution][i][1]*height);
+            // Rotation wird als erstes geändert, da sich dadurch die Größe und somit die Position des Steines ändern kann.
+            pieces[i].setRotation(SOLUTIONS[rSolution][i][2]);
+            pieces[i].x = (int) (x + SOLUTIONS[rSolution][i][0]*width);
+            pieces[i].y = (int) (y + SOLUTIONS[rSolution][i][1]*height);
 
-            // Höhe und Breite der Steine zurücksetzten, falls das Puzzle der Ausgangszustand ist
+            // Höhe und Breite der Steine zurücksetzten, falls es sich beim Puzzle um den Ausgangszustand handelt
             if(this == P_INIT) {
-                pieces[i].width = (int) (solutions[rSolution][i][3]*width);
-                pieces[i].height = (int) (solutions[rSolution][i][4]*height);
+                pieces[i].width = (int) (SOLUTIONS[rSolution][i][3]*width);
+                pieces[i].height = (int) (SOLUTIONS[rSolution][i][4]*height);
                 pieces[i].originalWidth = pieces[i].width;
                 pieces[i].originalHeight = pieces[i].height;
             }
         }
     }
-    
+
+    /**
+     * Setzt das Puzzle zurück
+     * @param pieces Die Tangram-Steine, die zurückgesetzt werden sollen
+     * @param x Die X-Position der verpackten Tangram-Steine
+     * @param y Die Y-Position der verpackten Tangram-Steine
+     * @param size Die Größe der verpackten Tangram-Steine
+     * @param px Die X-Position des Puzzles
+     * @param py Die Y-Position des Puzzles
+     * @param pwidth Die Breite des Puzzles
+     * @param pheight Die Höhe des Puzzles
+     */
     public void reset(TangramPieceObject[] pieces, int x, int y, int size, int px, int py, int pwidth, int pheight) {
+        // Steine in Ausgangszustand
         P_INIT.setGivenPieces(pieces, x, y, size, size);
+        // Steine vorgeben
         setGivenPieces(pieces, px, py, pwidth, pheight);
     }
 }
