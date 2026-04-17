@@ -141,10 +141,12 @@ public class TangramPieceObject extends BaseObject {
             scene.objects.add(this);
 
             isDragged = true;
+            // Außerdem teilen wir der levelScene mit, dass jetzt ein Stein gezogen wird
             levelScene.isDragging = true;
         } else if (isDragged && !Input.INSTANCE.getMouseState(MouseEvent.BUTTON1).isDown()) {
-            // Wenn die linke Maustaste losgelassen wird, wird das Objekt nicht mehr gezogen
+            // Wenn die linke Maustaste losgelassen wird, wird das Objekt nicht mehr gezogen,
             isDragged = false;
+            // Der levelScene mitgeteilt, dass kein Stein mehr gezogen wird
             levelScene.isDragging = false;
             // Und überprüft, ob das Puzzle gelöst ist
             levelScene.checkPuzzle();
@@ -164,7 +166,7 @@ public class TangramPieceObject extends BaseObject {
                 y = newPosY;
             }
 
-            // Rotieren des Objektes
+            // Rotieren des Objektes, falls 'R' gedrückt wird
             if(Input.INSTANCE.getKeyState(KeyEvent.VK_R) == Input.KeyState.PRESSED) {
                 rotate(45);
             }

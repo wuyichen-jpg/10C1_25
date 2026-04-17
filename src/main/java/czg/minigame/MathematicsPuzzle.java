@@ -188,7 +188,7 @@ public enum MathematicsPuzzle {
     /**
      * Die möglichen Tangram-Formen für jedes Level
      */
-    public static final MathematicsPuzzle[][] PUZZLES = {
+    private static final MathematicsPuzzle[][] PUZZLES = {
         {
             MathematicsPuzzle.P_00,
             MathematicsPuzzle.P_01,
@@ -205,31 +205,31 @@ public enum MathematicsPuzzle {
     };
 
     /**
+     * Form der Lösung
+     */
+    public final Image SPRITE;
+
+    /**
      * Wie weit ein Tangram-Teil von seiner korrekten
      * Position entfernt sein darf und trotzdem noch als
      * richtig angesehen wird
      */
-    public static final int MARGIN_OF_ERROR = 20;
-
-    /**
-     * Form der Lösung
-     */
-    public final Image sprite;
+    private static final int MARGIN_OF_ERROR = 20;
 
     /**
      * Wie viele Teile vorgegeben sind
      */
-    public final int amountOfGivenPieces;
+    private final int AMOUNT_OF_GIVEN_PIECES;
 
     /**
      * Mögliche Lösungen
      */
-    public final double[][][] solutions;
+    private final double[][][] SOLUTIONS;
 
     MathematicsPuzzle(String path, int amountOfGivenPieces, double[][][] solutions) {
-        this.sprite = Images.get(path);
-        this.amountOfGivenPieces = amountOfGivenPieces;
-        this.solutions = solutions;
+        this.SPRITE = Images.get(path);
+        this.AMOUNT_OF_GIVEN_PIECES = amountOfGivenPieces;
+        this.SOLUTIONS = solutions;
     }
 
     /**
@@ -256,7 +256,7 @@ public enum MathematicsPuzzle {
      * @return Ob die Form richtig gelegt wurde
      */
     public boolean isSolutionValid(TangramPieceObject[] pieces, int x, int y, int width, int height) {
-        for(double[][] solution : solutions) {
+        for(double[][] solution : SOLUTIONS) {
             // Große Dreiecke
             boolean normal =
                 matches(pieces[0], solution[0], 0.0, x, y, width, height) &&
@@ -328,13 +328,13 @@ public enum MathematicsPuzzle {
      */
     private void setGivenPieces(TangramPieceObject[] pieces, int x, int y, int width, int height) {
         // Initialisierung eines Index-Arrays mit Platzhalter-Werten
-        int[] idx = new int[amountOfGivenPieces];
-        for(int i = 0; i < amountOfGivenPieces; i++) {
+        int[] idx = new int[AMOUNT_OF_GIVEN_PIECES];
+        for(int i = 0; i < AMOUNT_OF_GIVEN_PIECES; i++) {
             idx[i] = -1;
         }
 
         // Generierung der zufälligen Indizes der vorzugebenden Steine
-        for(int i = 0; i < amountOfGivenPieces; i++) {
+        for(int i = 0; i < AMOUNT_OF_GIVEN_PIECES; i++) {
             int rIdx;
             // Neuer zufälliger Index, solange der alte bereits generiert wurde
             while(true) {
@@ -352,17 +352,17 @@ public enum MathematicsPuzzle {
             idx[i] = rIdx;
         }
         // Festlegen einer Lösung des Puzzles
-        int rSolution = new Random().nextInt(solutions.length);
+        int rSolution = new Random().nextInt(SOLUTIONS.length);
         // Positionierung der Steine
         for(int i : idx) {
-            pieces[i].setRotation(solutions[rSolution][i][2]);
-            pieces[i].x = (int) (x + solutions[rSolution][i][0]*width);
-            pieces[i].y = (int) (y + solutions[rSolution][i][1]*height);
+            pieces[i].setRotation(SOLUTIONS[rSolution][i][2]);
+            pieces[i].x = (int) (x + SOLUTIONS[rSolution][i][0]*width);
+            pieces[i].y = (int) (y + SOLUTIONS[rSolution][i][1]*height);
 
             // Höhe und Breite der Steine zurücksetzten, falls das Puzzle der Ausgangszustand ist
             if(this == P_INIT) {
-                pieces[i].width = (int) (solutions[rSolution][i][3]*width);
-                pieces[i].height = (int) (solutions[rSolution][i][4]*height);
+                pieces[i].width = (int) (SOLUTIONS[rSolution][i][3]*width);
+                pieces[i].height = (int) (SOLUTIONS[rSolution][i][4]*height);
                 pieces[i].originalWidth = pieces[i].width;
                 pieces[i].originalHeight = pieces[i].height;
             }
