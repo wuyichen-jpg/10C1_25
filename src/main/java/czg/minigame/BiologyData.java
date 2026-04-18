@@ -27,13 +27,13 @@ public class BiologyData {
     public static final BiologyPlant[] LEVEL_3_PLANTS = {new BiologyPlant(Images.get("/assets/minigames/biology/level3/AbendländischerLebensbaum.jpg"), "Abendländischer Lebensbaum"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/Beberitze.jpg"), "Gewöhnliche Beberitze"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/GemeinerLiguster.jpg"), "Gemeiner Liguster"),
-                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/GewöhnlicheRobinie.JPG"), "Gewöhnliche Robinie"),
+                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/GewöhnlicheRobinie.jpg"), "Gewöhnliche Robinie"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/Gundermann.jpg"), "Gundermann"),
-                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Hirtentäschel.JPG"), "Gewöhnliches Hirtentäschel"),
+                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Hirtentäschel.jpg"), "Gewöhnliches Hirtentäschel"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/Hungerblümchen.jpg"), "Hungerblümchen"),
-                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Kirschlorbeer.JPG"), "Kirschlorbeer"),
+                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Kirschlorbeer.jpg"), "Kirschlorbeer"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/RoterHartriegel.jpg"), "Roter Hartriegel"),
-                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Schopf-Lavendel.jpeg"), "Schopf-Lavendel"),
-                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Schwarzkiefer.JPG"), "Schwarzkiefer"),
+                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Schopf-Lavendel.jpg"), "Schopf-Lavendel"),
+                                                         new BiologyPlant(Images.get("/assets/minigames/biology/level3/Schwarzkiefer.jpg"), "Schwarzkiefer"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/Wiesensauerampfer.jpg"), "Wiesen-Sauerampfer")};
 }
