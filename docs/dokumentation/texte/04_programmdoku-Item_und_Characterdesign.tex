@@ -204,7 +204,7 @@ Das \texttt{LehrerObject} ist ebenfalls eine Erweiterung des \texttt{BaseObject}
 Die Items sind in der Form von im Glossar erklärten Enums gespeichert. Jedes Enum hat einen Namen und eine am Anfang festgelegte Anzahl von Parametern und deren Datentypen: der String NAME für den Namen des Items, das Image SPRITE für die Bilddatei und den Integer LEVEL für die Stärke des Items. 
 
 \begin{lstlisting}[caption=ItemType, label=programm:itemtype, captionpos=t, language=Java]
-    public enum ItemType {
+public enum ItemType {
     ATOM("Atom", "/assets/items/atom.png", 0),
     BSOD("Error-Screen", "/assets/items/blue_screen_of_death.png", 2),
     BRENNER("Brenner", "/assets/items/brenner.png", 2),
@@ -218,9 +218,11 @@ Die Items sind in der Form von im Glossar erklärten Enums gespeichert. Jedes En
     KRAFTMESSER("Federkraftmesser", "/assets/items/kraftmesser.png", 0),
     LAUTSPRECHER("Lautsprecher", "/assets/items/lautsprecher.png", 0),
     LINEAL("Lineal", "/assets/items/lineal.png", 0),
+    TEXT("FrauBreunig","/assets/items/wenn_sie_das_hier_wirklich.png", 1),
     MAGNET("Magnet", "/assets/items/magnet.png", 1),
     MIKROSKOP("Mikroskop", "/assets/items/mikroskop.png", 2),
     NERV("Nervenzelle", "/assets/items/nerv.png", 0),
+    PAPIER("FrauBreunig","/assets/items/lesen_sagen_sie_bescheid.png", 2),
     NEWTONSAPFEL("Newtons Apfel", "/assets/items/newtons_apfel.png", 0),
     THALES("Satz des Thales", "/assets/items/satz_des_thales.png", 1),
     SCHUTZBRILLE("Schutzbrille", "/assets/items/schutzbrille.png", 1),
