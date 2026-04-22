@@ -1,11 +1,6 @@
 package czg.scenes;
 
 import czg.objects.*;
-import czg.objects.music_loop_object.MusicLoopObject;
-import czg.objects.music_loop_object.SegmentChangeMarker;
-import czg.sound.BaseSound;
-import czg.sound.EndOfFileBehaviour;
-import czg.sound.StreamSound;
 import czg.util.Images;
 
 public class MatheraumScene extends BaseScene{
@@ -27,17 +22,5 @@ public class MatheraumScene extends BaseScene{
         this.objects.add(PlayerObject.INSTANCE);
         PlayerObject.INSTANCE.x = 270;
         PlayerObject.INSTANCE.y = 295;
-
-        BaseSound intro = sounds.get().addSound(new StreamSound("/assets/sound/fight_intro.ogg", false, EndOfFileBehaviour.STOP));
-        BaseSound loop1 = sounds.get().addSound(new StreamSound("/assets/sound/fight_loop.ogg", false, EndOfFileBehaviour.RESTART_AND_PAUSE));
-        BaseSound loop2 = sounds.get().addSound(new StreamSound("/assets/sound/fight_loop.ogg", false, EndOfFileBehaviour.RESTART_AND_PAUSE));
-
-        MusicLoopObject music = new MusicLoopObject()
-                .addTrackSegment(intro, new SegmentChangeMarker(18_353, loop1))
-                .addTrackSegment(loop1, new SegmentChangeMarker(50_854, loop2))
-                .addTrackSegment(loop2, new SegmentChangeMarker(50_854, loop1))
-                .start();
-
-        objects.add(music);
     }
 }
