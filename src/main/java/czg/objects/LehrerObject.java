@@ -25,6 +25,7 @@ public class LehrerObject extends BaseObject{
         lehrerItems = ItemType.getItems(fachschaft);
     }
 
+    // Je nach dem welcher Fachschaft der Lehrer angehört, kriegt er sein richtiges Bild.
     public static Image getImage(Department fachschaft) { // ordnet den Fachschaften die Lehrer mit Bild zu
         if (fachschaft == Department.COMPUTER_SCIENCE) {
 
@@ -50,6 +51,7 @@ public class LehrerObject extends BaseObject{
         throw new IllegalArgumentException("Konnte der Fachschaft "+fachschaft+" kein Foto zuordnen!");
     }
 
+    // Der Lehrer in den normalen Räumen ist nur ein Button. Dieser wird hier gebaut.
     public static void addButtonObject(BaseScene scene, Department department, int x, int y) {
         if(KampfScene.uebrigeLehrer.contains(department)) {
             ButtonObject button = new ButtonObject(LehrerObject.getImage(department),
@@ -67,10 +69,11 @@ public class LehrerObject extends BaseObject{
         }
     }
 
+    // Für den Fall, dass der Lehrer sich verteidigen muss.
     public int verteidigung(int zwischenSchaden) {
         // Es wird random ausgewählt, ob ein Item gewählt wird (und welches), oder ob der Lehrer nichts macht.
         Random rand = new Random();
-        int move = rand.nextInt(5);
+        int move = rand.nextInt(7);
         int schaden;
         ItemType itemLehrer;
 
@@ -78,6 +81,7 @@ public class LehrerObject extends BaseObject{
         if (move == 0) {
             schaden = zwischenSchaden;
         }
+        // Sonst wird der Schaden abgezogen und ggf. die Leben des Lehrers dekrementiert.
         else {
             itemLehrer = lehrerItems.get(move - 1);
             displayItem(itemLehrer);
@@ -91,19 +95,23 @@ public class LehrerObject extends BaseObject{
         return schaden;
 
     }
-    
+
+    // Falls der Lehrer den Player angreift (würde er natürlich nie...)
     public int angriff() {
         // Der Lehrer wählt random, welches der Items er zum Angreifen benutzt.
         Random rand = new Random();
-        int move = rand.nextInt(4);
+        int move = rand.nextInt(6);
         ItemType itemLehrer;
-        
+
+        // Das Item wird angezeigt
         itemLehrer = lehrerItems.get(move);
         displayItem(itemLehrer);
-        
+
+        // Es wird der vom Item verursachte Schaden zurück gegeben.
         return itemLehrer.LEVEL + 1;
     }
 
+    // Eine Funktion, um ein Item an der richtigen Stelle angezeigt zu kriegen.
     public void displayItem(ItemType type) {
         KampfScene.instance.objects.remove(KampfScene.currentItem);
         if(type != null) {
@@ -119,6 +127,7 @@ public class LehrerObject extends BaseObject{
     public void update(BaseScene scene) {
         super.update(scene);
 
+        // Der Timer, um das Spielgeschehen zu entschleunigen, wird hier dekrementiert.
         if(delayTimer > 0) {
             delayTimer--;
             return;
@@ -136,6 +145,7 @@ public class LehrerObject extends BaseObject{
             return;
         }
 
+        // Hier verteidigt sich der Lehrer
         if(KampfScene.turn == KampfScene.Turn.LEHRER_DEFEND) {
             KampfScene.Endschaden = verteidigung(KampfScene.Zwischenschaden);
 
@@ -156,8 +166,13 @@ public class LehrerObject extends BaseObject{
                     postDelay = () -> KampfScene.turn = KampfScene.Turn.LEHRER_ATTACK;
                 };
             }
-        } else if(KampfScene.turn == KampfScene.Turn.LEHRER_ATTACK) {
+        }
+
+        // Falls der Lehrer am angreifen ist.
+        else if(KampfScene.turn == KampfScene.Turn.LEHRER_ATTACK) {
             KampfScene.Zwischenschaden = angriff();
+
+            // Der Schüler kriegt 4s Zeit zum verteidigen.
             KampfScene.timer = 4 * FPS;
             KampfScene.turn = KampfScene.Turn.PLAYER_DEFEND;
         }
@@ -171,10 +186,12 @@ public class LehrerObject extends BaseObject{
         if(KampfScene.imKampf) {
             boolean attack = (KampfScene.turn == KampfScene.Turn.PLAYER_DEFEND || KampfScene.turn == KampfScene.Turn.LEHRER_ATTACK);
 
+            // Je nach dem, wie die Situation ist, steht unter dem Lehrer Angriff oder Verteidigung.
             String text = attack ? "ANGRIFF" : "VERTEIDIGUNG";
             g.setColor(attack ? new Color(223, 52, 22) : new Color(83, 159, 234));
             Draw.drawTextCentered(g, text, x + width / 2, y + height + 5, true);
 
+            // Hiermit werden die übrigen Leben des Lehrers angezeigt.
             g.setColor(Color.WHITE);
             Draw.drawTextCentered(g, "HP: "+(KampfScene.LehrerLeben > 0 ? KampfScene.LehrerLeben : "--"), x + width  / 2, y + height - 20, true);
         }

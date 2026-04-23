@@ -103,6 +103,7 @@ public class PlayerObject extends BaseObject{
         return r.nextInt((max - min) + 1) + min;
     }
 
+    // Zwei Funktionen, um dem Spieler Items hinzuzufügen, oder wieder löschen zu können.
     public void addItem(ItemType item) {
         inventar.put(item, inventar.getOrDefault(item, 0) + 1);
     }
@@ -113,6 +114,7 @@ public class PlayerObject extends BaseObject{
             inventar.remove(item);
     }
 
+    // Mit dieser Funktion kann der Schüler sich gegen einen Angriff des Lehrers verteidigen.
     public int verteidigung(int schaden, ItemType item) {
         schaden -= item.LEVEL + 1;
         if (schaden < 0) {
@@ -122,6 +124,7 @@ public class PlayerObject extends BaseObject{
         return schaden;
     }
 
+    // Der Schüler greift an. Doch sehr kurze Funktion...
     public int angriff(ItemType item) {
         return item.LEVEL + 1;
     }
@@ -170,7 +173,9 @@ public class PlayerObject extends BaseObject{
         if(allowInventory && inventoryLockTimer == 0 && isClicked())
             InventarScene.open(true);
 
+        // Nur wenn der Schüler im Kampf ist soll er auch angreifen können
         if(KampfScene.imKampf) {
+            // Der Schüler muss kurz warten, bis er wieder angreifen darf, hier wird die Wartezeit dekrementiert.
             if(postDefendDelay > 0) {
                 postDefendDelay--;
                 if(postDefendDelay == 0) {
@@ -180,18 +185,24 @@ public class PlayerObject extends BaseObject{
                     return;
                 }
             }
-            
+
+            // Hier ist die Logik für die Verteidigung des Schülers.
             if(KampfScene.turn == KampfScene.Turn.PLAYER_DEFEND) {
                 InventarScene.open(false);
 
                 // Timer: Wie viel Zeit wir noch zum Verteidigen gegen den Angriff haben
+
+                // Falls der Timer ausläuft, kriegt der Schüler den vollen Schaden und ist dann selbst am Zug.
                 if(KampfScene.timer == 0) {
                     KampfScene.Endschaden = KampfScene.Zwischenschaden;
                     KampfScene.PlayerLeben -= KampfScene.Endschaden;
                     KampfScene.lehrerObject.displayItem(null);
                     postDefendDelay = 2 * FPS;
                     InventarScene.close();
-                } else {
+                }
+
+                // Falls der Schüler ein Item anklickt und der Timer noch nicht ausgelaufen ist, kriegt er nur einen Teil des Schadens und ist dann am Zug.
+                else {
                     if(KampfScene.clicked != null) {
                         KampfScene.Endschaden = verteidigung(KampfScene.Zwischenschaden, KampfScene.clicked);
                         removeItem(KampfScene.clicked);
@@ -203,9 +214,14 @@ public class PlayerObject extends BaseObject{
                         InventarScene.close();
                     }
                 }
-            } else if (KampfScene.turn == KampfScene.Turn.PLAYER_ATTACK) {
+
+            }
+
+            // Die Logik, wenn der Schüler gerade am Zug ist.
+            else if (KampfScene.turn == KampfScene.Turn.PLAYER_ATTACK) {
                 InventarScene.open(false);
 
+                // Wenn der Schüler ein Item auswählt, wird mit diesem ein Angriff ausgeführt und der Lehrer muss verteidigen.
                 if(KampfScene.clicked != null) {
                     KampfScene.Zwischenschaden = angriff(KampfScene.clicked);
                     removeItem(KampfScene.clicked);
@@ -224,10 +240,12 @@ public class PlayerObject extends BaseObject{
         if(KampfScene.imKampf) {
             boolean attack = (KampfScene.turn == KampfScene.Turn.PLAYER_ATTACK || KampfScene.turn == KampfScene.Turn.LEHRER_DEFEND);
 
+            // Je nach der Situation, steht unter dem Schüler Angriff oder Verteidigung
             String text = attack ? "ANGRIFF" : "VERTEIDIGUNG";
             g.setColor(attack ? new Color(223, 52, 22) : new Color(83, 159, 234));
             Draw.drawTextCentered(g, text, x + width / 2, y + height + 5, true);
 
+            // Es werden die übrigen HP des Schülers gezeichnet.
             g.setColor(Color.WHITE);
             Draw.drawTextCentered(g, "HP: "+(KampfScene.PlayerLeben > 0 ? KampfScene.PlayerLeben : "--"), x + width  / 2, y + height -20, true);
         }

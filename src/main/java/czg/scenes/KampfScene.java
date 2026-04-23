@@ -51,23 +51,27 @@ public class KampfScene extends BaseScene{
         //Einfügen des Hintergrunds
         objects.add(new BackdropObject(Images.get("/assets/background/Kampfgang.png")));
 
+        // Festsetzen der Variablen für den Anfang vom Kampf
         instance = this;
         imKampf = true;
         turn = Turn.PLAYER_ATTACK;
         timer = 0;
         Zwischenschaden = 0;
         Endschaden = 0;
-        LehrerLeben = 10;
-        PlayerLeben = 10;
+        LehrerLeben = 5;
+        PlayerLeben = 5;
         currentItem = null;
 
+        // Erstellen des LehrerObjects
         lehrerObject = new LehrerObject(700, 280, FACHSCHAFT);
         this.objects.add(lehrerObject);
 
+        // Spieler an richtiger Stelle + Spieler überhaupt sichtbar
         this.objects.add(PlayerObject.INSTANCE);
         PlayerObject.INSTANCE.x = 120;
         PlayerObject.INSTANCE.y = 295;
 
+        // Button zum Verlassen der Kampfszene
         objects.add(new PfeilObject(null, null, PfeilObject.UNTEN) {
             @Override
             public void update(BaseScene scene) {
@@ -78,6 +82,7 @@ public class KampfScene extends BaseScene{
             }
         });
 
+        // Änderung der Musik zu Kampf Musik
         Sounds.HALLWAY_MUSIC.setPlaying(false);
 
         BaseSound intro = sounds.get().addSound(new StreamSound("/assets/sound/fight_intro.ogg", false, EndOfFileBehaviour.STOP));
@@ -95,16 +100,21 @@ public class KampfScene extends BaseScene{
 
     @Override
     public void update() {
+        // Es wird das ggf. in diesem frame angeklickte Item gefunden
         clicked = InventarScene.getClickedItem();
         super.update();
 
+        // Falls der Spieler gerade verteidigen sollte, wird der Timer dekrementiert
         if(timer > 0) {
             timer -= 1;
         }
 
+        // Wenn der Player keine Leben oder keine Items mehr hat (und am Zug ist), hat er verloren
         if(PlayerLeben <= 0 || (PlayerObject.INSTANCE.inventar.isEmpty() && turn == Turn.PLAYER_ATTACK)) {
             SceneStack.INSTANCE.push(new KampfEndScene(false, !PlayerObject.INSTANCE.inventar.isEmpty()));
-        } else if(LehrerLeben <= 0) {
+        }
+        // Wenn der Lehrer keine Leben mehr hat, hat dieser verloren
+        else if(LehrerLeben <= 0) {
             uebrigeLehrer.remove(FACHSCHAFT);
             SceneStack.INSTANCE.push(new KampfEndScene(true, false));
         }
@@ -115,6 +125,7 @@ public class KampfScene extends BaseScene{
     public void draw(Graphics2D g) {
         super.draw(g);
 
+        // Die ggf. zum Verteidigen übrige Zeit wird gezeichnet
         if(KampfScene.timer != 0) {
             g.setColor(Color.GRAY);
             g.setFont(Draw.FONT_INFO.deriveFont(30f));
@@ -124,12 +135,13 @@ public class KampfScene extends BaseScene{
 
     @Override
     public void unload() {
+        // Die Leben des Players und des Lehrers werden wieder zurückgesetzt, genauso wie die Musik und weiteres.
         super.unload();
         Sounds.HALLWAY_MUSIC.setPlaying(true);
         PlayerObject.INSTANCE.allowInventory = true;
         KampfScene.imKampf = false;
-        KampfScene.PlayerLeben = 10;
-        KampfScene.LehrerLeben = 10;
+        KampfScene.PlayerLeben = 5;
+        KampfScene.LehrerLeben = 5;
         instance = null;
     }
 }
