@@ -3,7 +3,6 @@ package czg.objects;
 import czg.scenes.BaseScene;
 import czg.scenes.InventarScene;
 import czg.scenes.KampfScene;
-import czg.scenes.SceneStack;
 import czg.util.Capsule;
 import czg.util.Draw;
 import czg.util.Images;
@@ -17,6 +16,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
 
+import static czg.MainWindow.FPS;
 import static czg.MainWindow.PIXEL_SCALE;
 
 /**
@@ -70,6 +70,11 @@ public class PlayerObject extends BaseObject{
      * Singleton-Instanz
      */
     public static final PlayerObject INSTANCE = new PlayerObject();
+    
+    // Timer, der nach dem Verteidigen startet
+    private int postDefendDelay = 0;
+
+    public int inventoryLockTimer = 0;
 
 
     /**
@@ -158,43 +163,53 @@ public class PlayerObject extends BaseObject{
 
     @Override
     public void update(BaseScene scene) {
+        if(inventoryLockTimer > 0)
+            inventoryLockTimer--;
+
         // Inventar öffnen, wenn die Figur angeklickt wird
-        if(allowInventory && isClicked())
-            SceneStack.INSTANCE.push(new InventarScene(true));
+        if(allowInventory && inventoryLockTimer == 0 && isClicked())
+            InventarScene.open(true);
 
         if(KampfScene.imKampf) {
+            if(postDefendDelay > 0) {
+                postDefendDelay--;
+                if(postDefendDelay == 0) {
+                    InventarScene.open(false);
+                    KampfScene.turn = KampfScene.Turn.PLAYER_ATTACK;
+                } else {
+                    return;
+                }
+            }
+            
             if(KampfScene.turn == KampfScene.Turn.PLAYER_DEFEND) {
-                if(! (SceneStack.INSTANCE.getTop() instanceof InventarScene))
-                    SceneStack.INSTANCE.push(new InventarScene(false));
+                InventarScene.open(false);
 
                 // Timer: Wie viel Zeit wir noch zum Verteidigen gegen den Angriff haben
                 if(KampfScene.timer == 0) {
                     KampfScene.Endschaden = KampfScene.Zwischenschaden;
                     KampfScene.PlayerLeben -= KampfScene.Endschaden;
-                    KampfScene.turn = KampfScene.Turn.PLAYER_ATTACK;
                     KampfScene.lehrerObject.displayItem(null);
-                }
-                else {
+                    postDefendDelay = 2 * FPS;
+                    InventarScene.close();
+                } else {
                     if(KampfScene.clicked != null) {
                         KampfScene.Endschaden = verteidigung(KampfScene.Zwischenschaden, KampfScene.clicked);
                         removeItem(KampfScene.clicked);
                         InventarScene.rebuild();
                         KampfScene.PlayerLeben -= KampfScene.Endschaden;
-                        KampfScene.turn = KampfScene.Turn.PLAYER_ATTACK;
                         KampfScene.timer = 0;
                         KampfScene.lehrerObject.displayItem(null);
+                        postDefendDelay = 2 * FPS;
+                        InventarScene.close();
                     }
                 }
             } else if (KampfScene.turn == KampfScene.Turn.PLAYER_ATTACK) {
-                // Inventar ggf. öffnen
-                if(! (SceneStack.INSTANCE.getTop() instanceof InventarScene))
-                    SceneStack.INSTANCE.push(new InventarScene(false));
+                InventarScene.open(false);
 
                 if(KampfScene.clicked != null) {
                     KampfScene.Zwischenschaden = angriff(KampfScene.clicked);
                     removeItem(KampfScene.clicked);
-                    // Inventar schließen
-                    SceneStack.INSTANCE.pop();
+                    InventarScene.close();
                     KampfScene.turn = KampfScene.Turn.LEHRER_DEFEND;
                 }
             }
@@ -211,10 +226,10 @@ public class PlayerObject extends BaseObject{
 
             String text = attack ? "ANGRIFF" : "VERTEIDIGUNG";
             g.setColor(attack ? new Color(223, 52, 22) : new Color(83, 159, 234));
-            Draw.drawTextCentered(g, text, x + width / 2, y + height + 20, true);
+            Draw.drawTextCentered(g, text, x + width / 2, y + height + 5, true);
 
             g.setColor(Color.WHITE);
-            Draw.drawTextCentered(g, "HP: "+KampfScene.PlayerLeben, x + width  / 2, y + height + 40, true);
+            Draw.drawTextCentered(g, "HP: "+(KampfScene.PlayerLeben > 0 ? KampfScene.PlayerLeben : "--"), x + width  / 2, y + height -20, true);
         }
     }
 }

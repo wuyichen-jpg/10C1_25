@@ -163,7 +163,7 @@ public class MainWindow extends JFrame implements Runnable {
                 }
                 if(Input.INSTANCE.getKeyState(KeyEvent.VK_D) == Input.KeyState.PRESSED)
                     Input.debugDrawMode = (Input.debugDrawMode + 1)%3;
-                if(Input.INSTANCE.getKeyState(KeyEvent.VK_NUMBER_SIGN) == Input.KeyState.PRESSED) {
+                if(Input.INSTANCE.getKeyState(KeyEvent.VK_C) == Input.KeyState.PRESSED) {
                     Console.queue.add(JOptionPane.showInputDialog(MainWindow.INSTANCE, "Console"));
                 }
 

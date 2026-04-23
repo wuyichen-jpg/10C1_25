@@ -13,8 +13,6 @@ import czg.util.Images;
 import czg.util.Sounds;
 
 import java.awt.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -95,23 +93,10 @@ public class KampfScene extends BaseScene{
         }
 
         if(PlayerLeben <= 0) {
-            exit();
+            SceneStack.INSTANCE.push(new KampfEndScene(false));
         } else if(LehrerLeben <= 0) {
             uebrigeLehrer.remove(FACHSCHAFT);
-            exit();
-        }
-    }
-
-    private static void exit() {
-        if(SceneStack.INSTANCE.getTop() instanceof InventarScene)
-            SceneStack.INSTANCE.pop();
-        SceneStack.INSTANCE.pop();
-        Class<? extends BaseScene> raumClass = SceneStack.INSTANCE.getTop().getClass();
-        try {
-            Constructor<?> constr = raumClass.getConstructor();
-            SceneStack.INSTANCE.replace(SceneStack.INSTANCE.getTop(), (BaseScene) constr.newInstance());
-        } catch (NoSuchMethodException|InvocationTargetException|InstantiationException|IllegalAccessException e) {
-            throw new RuntimeException("wir sind so cooked");
+            SceneStack.INSTANCE.push(new KampfEndScene(true));
         }
     }
 

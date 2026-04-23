@@ -133,7 +133,6 @@ public class LehrerObject extends BaseObject{
         }
 
         if(KampfScene.turn == KampfScene.Turn.LEHRER_DEFEND) {
-            System.out.println("lehrer defend");
             KampfScene.Endschaden = verteidigung(KampfScene.Zwischenschaden);
 
             if(KampfScene.Zwischenschaden == KampfScene.Endschaden) {
@@ -155,7 +154,7 @@ public class LehrerObject extends BaseObject{
             }
         } else if(KampfScene.turn == KampfScene.Turn.LEHRER_ATTACK) {
             KampfScene.Zwischenschaden = angriff();
-            KampfScene.timer = 10 * FPS;
+            KampfScene.timer = 4 * FPS;
             KampfScene.turn = KampfScene.Turn.PLAYER_DEFEND;
         }
     }
@@ -170,10 +169,10 @@ public class LehrerObject extends BaseObject{
 
             String text = attack ? "ANGRIFF" : "VERTEIDIGUNG";
             g.setColor(attack ? new Color(223, 52, 22) : new Color(83, 159, 234));
-            Draw.drawTextCentered(g, text, x + width / 2, y + height + 20, true);
+            Draw.drawTextCentered(g, text, x + width / 2, y + height + 5, true);
 
             g.setColor(Color.WHITE);
-            Draw.drawTextCentered(g, "HP: "+KampfScene.LehrerLeben, x + width  / 2, y + height + 40, true);
+            Draw.drawTextCentered(g, "HP: "+(KampfScene.LehrerLeben > 0 ? KampfScene.LehrerLeben : "--"), x + width  / 2, y + height - 20, true);
         }
     }
 }

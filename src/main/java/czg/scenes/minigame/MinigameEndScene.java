@@ -31,13 +31,13 @@ public class MinigameEndScene extends BaseScene {
 
             BaseObject rewardContainer = new BaseObject(Images.get("/assets/minigames/general/reward_container.png"));
             rewardContainer.x = (MainWindow.WIDTH - rewardContainer.width) / 2;
-            rewardContainer.y = (int)((MainWindow.HEIGHT - rewardContainer.height) * 0.9);
+            rewardContainer.y = (int)((MainWindow.HEIGHT - rewardContainer.height) * 0.8);
 
             objects.add(rewardContainer);
 
             BaseObject rewardItem = new ItemObject(reward, 0, 0, 0);
-            rewardItem.x = (MainWindow.WIDTH - rewardContainer.width + rewardContainer.width-rewardItem.width) / 2;
-            rewardItem.y = (int)((MainWindow.HEIGHT - rewardContainer.height) * 0.9) + (rewardContainer.height-rewardItem.height) / 2;
+            rewardItem.x = MainWindow.WIDTH / 2 - rewardItem.width / 2;
+            rewardItem.y = rewardContainer.y + rewardContainer.height / 2 - rewardItem.height / 2;
 
             objects.add(rewardItem);
         } else {

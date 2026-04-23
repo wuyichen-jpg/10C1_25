@@ -11,6 +11,8 @@ public class ItemObject extends BaseObject {
     public final ItemType item;
     private final int count;
 
+    private static final int MIN_LV_COUNT_DISTANCE = PIXEL_SCALE * 12;
+
     private static final Color[] LEVEL_COLORS = {
             Color.ORANGE,
             new Color(72, 194, 194),
@@ -50,11 +52,24 @@ public class ItemObject extends BaseObject {
         }
 
         if(count > 0) {
+            int left = x + PIXEL_SCALE;
+            int right = x + width - PIXEL_SCALE;
+            final int distance = right - left;
+            if (distance < MIN_LV_COUNT_DISTANCE) {
+                final int diff = (MIN_LV_COUNT_DISTANCE - distance) / 2;
+                left -= diff;
+                right += diff;
+            }
+
+            g.setColor(item.LEVEL < LEVEL_COLORS.length ? LEVEL_COLORS[item.LEVEL] : Color.MAGENTA);
+            Draw.drawTextCentered(g, "Lv "+(item.LEVEL+1), left, y + height + PIXEL_SCALE * 2, true);
+
             g.setColor(Color.WHITE);
-            Draw.drawTextCentered(g, "x%d".formatted(count), x + width - PIXEL_SCALE, y + height + PIXEL_SCALE * 2, true);
+            Draw.drawTextCentered(g, "x%d".formatted(count), right, y + height + PIXEL_SCALE * 2, true);
+        } else {
+            g.setColor(LEVEL_COLORS[item.LEVEL]);
+            Draw.drawTextCentered(g, "Lv "+(item.LEVEL+1), x + width / 2, y + height + PIXEL_SCALE * 2, true);
         }
 
-        g.setColor(LEVEL_COLORS[item.LEVEL]);
-        Draw.drawTextCentered(g, "Lv "+(item.LEVEL+1), x + PIXEL_SCALE, y + height + PIXEL_SCALE * 2, true);
     }
 }

@@ -151,6 +151,16 @@ public class InventarScene extends BaseScene {
         INSTANCE = newInv;
     }
 
+    public static void open(boolean allowClosing) {
+        if(INSTANCE == null)
+            SceneStack.INSTANCE.push(new InventarScene(allowClosing));
+    }
+
+    public static void close() {
+        if(INSTANCE != null)
+            SceneStack.INSTANCE.remove(InventarScene.INSTANCE);
+    }
+
     private void changeRow(int by) {
         if(rows.isEmpty())
             return;
