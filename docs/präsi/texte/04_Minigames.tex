@@ -28,35 +28,240 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Informatik}
-	\begin{minipage}[l]{0.40\textwidth}
-		\begin{itemize}
-			\item Konzept: Vervollständigen von Schaltkreisen
-			\item Level: unterschiedlich viele fehlende Gatter und Antwortmöglichkeiten
-		\end{itemize}
-	\end{minipage}
-	\hfill
-	\begin{minipage}[r]{0.55\textwidth}
-		\centering
+	\frametitle{Das Informatik-Minigame}
+        Konzept:
+        \begin{itemize}
+            \item Vervollständigen eines Schaltkreises
+            \item Verhalten gegeben
+            \item Antwortmöglichkeiten gegeben
+        \end{itemize}
 		\begin{figure}
-			\includegraphics[width=\textwidth]{bilder/MinispielInformatik.png}
+			\includegraphics[height=0.4\textheight]{bilder/MinispielInformatik.png}
 			\caption{Beispiel Informatik-Minigame (Bildschirmfoto des Projektes)}
 		\end{figure}
-	\end{minipage}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Informatik}
-	Idee:
-	\begin{itemize}
-		\item Vervollständigen eines Schaltkreises
-		\item Verhalten gegeben
-		\item Antwortmöglichkeiten gegeben
-	\end{itemize}
+	\frametitle{Differenzierung der Level}
+    \textbf{Schaltkreis:}
+    \begin{figure}
+        \begin{minipage}{0.3\textwidth}
+            Level 1:
+            \begin{figure}
+                \includegraphics[width=1\textwidth]{bilder/MGInfoSchaltkreisLevel1.png}
+            \end{figure}                
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.3\textwidth}
+            Level 2:
+            \begin{figure}[H]
+                \includegraphics[width=1\textwidth]{bilder/MGInfoSchaltkreisLevel2.png}
+            \end{figure}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.3\textwidth}
+            Level 3:
+            \begin{figure}[H]
+                \includegraphics[width=1\textwidth]{bilder/MGInfoSchaltkreisLevel3.png}
+            \end{figure}
+        \end{minipage}
+        \caption{Schaltkreise der Level (eigene Grafiken, erstellt mit GIMP)}
+        \label{fig:mginfschaltkreise}
+    \end{figure}
+    \textbf{Antwortmöglichkeiten:}\\
+    \begin{minipage}{0.3\textwidth}
+        Level 1: 4 Gatter                
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        Level 2: 5 Gatter
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        Level 3: 6 Gatter   
+    \end{minipage}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Mathematik}
+	\frametitle{Umsetzung}
+    \begin{itemize}
+        \item \texttt{ComputerScienceLevelScene} \pause
+            \begin{itemize}
+                \item Erweiterung der \texttt{LevelScene} \pause
+                \item Platzierung der Antwortmöglichkeiten und des Schaltkreises, sowie Verwaltung der Eingaben \pause
+            \end{itemize}
+        \item \texttt{LogicGate} \pause
+            \begin{itemize}
+                \item Enumeration \pause
+                \item Bereitstellung des Bildes, sowie Funktionen zur Generierung der Antwortmöglichkeiten \pause
+            \end{itemize}
+        \item \texttt{ComputerSciencePuzzle} \pause
+            \begin{itemize}
+                \item Enumeration \pause
+                \item Speichern des Schaltkreises, der Lösung und der Anzahl Antwortmöglichkeiten
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Verwaltung der Eingabe}
+    \begin{figure}
+        \includegraphics[width=1\textwidth]{bilder/StruktogrammSetAnswer1.pdf}
+        \caption{Struktogramm der setAnswer-Methode I (eigene Abbildung, erstellt mit Structorizer)}
+        \label{fig:mginfsetanswer1}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Verwaltung der Eingabe}
+    \begin{figure}
+        \includegraphics[width=1\textwidth]{bilder/StruktogrammSetAnswer2.pdf}
+        \caption{Struktogramm der setAnswer-Methode II (eigene Abbildung, erstellt mit Structorizer)}
+        \label{fig:mginfsetanswer2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Das Mathematik-Minigame}
+        Konzept:
+        \begin{itemize}
+            \item Legespiel TANGRAM
+            \item Steine gegeben
+            \item Form gegeben
+        \end{itemize}
+		\begin{figure}
+			\includegraphics[height=0.4\textheight]{bilder/MinispielMathematik.png}
+			\caption{Beispiel Mathematik-Minigame (Bildschirmfoto des Projektes)}
+		\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Differenzierung der Level}
+    \textbf{Form:}
+    \begin{figure}
+        \begin{minipage}{0.3\textwidth}
+            Level 1:\\
+            \begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramHerz.png}
+                \end{figure}
+            \end{minipage}
+            \hfill\begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramSchwan.png}
+                \end{figure}
+            \end{minipage}
+            \hfill\begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramBerg.png}
+                \end{figure}
+            \end{minipage}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.3\textwidth}
+            Level 2:\\
+            \begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramHaus.png}
+                \end{figure}
+            \end{minipage}
+            \hfill\begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramNinjastern.png}
+                \end{figure}
+            \end{minipage}
+            \hfill\begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramBaum.png}
+                \end{figure}
+            \end{minipage}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.3\textwidth}
+            Level 3:\\
+            \begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramLäufer.png}
+                \end{figure}
+            \end{minipage}
+            \hfill\begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramKamel.png}
+                \end{figure}
+            \end{minipage}
+            \hfill\begin{minipage}{0.3\textwidth}
+                \begin{figure}
+                    \includegraphics[width=1\textwidth]{bilder/TangramHai.png}
+                \end{figure}
+            \end{minipage}
+        \end{minipage}
+        \caption{TANGRAM-Formen der Level (eigene Grafiken, erstellt mit Polypad)}
+        \label{fig:mgmatangramformen}
+    \end{figure}
+    \textbf{vorgegebene Steine:}\\
+    \begin{minipage}{0.3\textwidth}
+        Level 1: 2 Steine
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        Level 2: 1 Stein
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        Level 3: kein Stein
+    \end{minipage}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Umsetzung}
+    \begin{itemize}
+        \item \texttt{MathematicsLevelScene} \pause
+            \begin{itemize}
+                \item Erweiterung der \texttt{LevelScene} \pause
+                \item Platzierung der Form und der Steine \pause
+            \end{itemize}
+        \item \texttt{TangramPieceObject} \pause
+            \begin{itemize}
+                \item Erweiterung des \texttt{BaseObjects} \pause
+                \item Bereitstellung des Bildes, sowie Funktionen zum Bewegen und Rotieren \pause
+            \end{itemize}
+        \item \texttt{MathematicsPuzzle} \pause
+            \begin{itemize}
+                \item Enumeration \pause
+                \item Speichern des Bildes, der Lösung und der Anzahl vorgegebener Steine
+                \item Zurücksetzen des Puzzles und Überprüfung der Belegung
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Überprüfung einer Belegung}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\textwidth]{bilder/MGMatheIsSolutionValid1.png}
+        \caption{Codeausschnitt der isSolutionValid-Methode I (Bildschirmfoto des Projektes)}
+        \label{fig:mgmaissolutionvalid1}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Überprüfung einer Belegung}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\textwidth]{bilder/MGMatheIsSolutionValid2.png}
+        \caption{Codeausschnitt der isSolutionValid-Methode II (Bildschirmfoto des Projektes)}
+        \label{fig:mgmaissolutionvalid2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Überprüfung einer Belegung}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\textwidth]{bilder/MGMatheIsSolutionValid3.png}
+        \caption{Codeausschnitt der isSolutionValid-Methode III (Bildschirmfoto des Projektes)}
+        \label{fig:mgmaissolutionvalid3}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
