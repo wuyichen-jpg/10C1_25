@@ -9,7 +9,14 @@
 \usepackage{amsmath} 
 \usepackage{subfig}
 \usepackage{hyperref}
-\usepackage{algorithm,algorithmic}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\makeatletter
+\newcommand{\algmargin}{\the\ALG@thistlm}
+\makeatother
+\algnewcommand{\parState}[1]{\State%
+	\parbox[t]{\dimexpr\linewidth-\algmargin}{\strut#1\strut}}
 
 \captionsetup[figure]{labelformat=simple, labelsep=colon}
 \renewcommand\thefigure{\arabic{figure}}
