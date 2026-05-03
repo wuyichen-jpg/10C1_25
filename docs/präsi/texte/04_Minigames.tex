@@ -326,7 +326,7 @@ Sie beinhaltet:
         \begin{itemize}
             \item Blöcke werden von oben eingefügt entnommen (Stack-Prinzip)
             \item \texttt{istLeer()}, \texttt{istVoll()} – Füllzustand abfragen
-            \item \texttt{istGeloest()} – \texttt{true}, wenn alle Blöcke dieselbe Farbe haben
+            \item \texttt{istGeloest()} – \texttt{true}, wenn Glas einfarbig
         \end{itemize} \pause
 
         \item \textbf{Interaktion}
@@ -433,15 +433,12 @@ Sie beinhaltet:
         \begin{itemize} 
             \item \texttt{simulationStarten()}: Spielerkraft als Startgeschwindigkeit
             \item \texttt{ballBewegen()} wendet \texttt{basisBeschleunigungen} an
-            \begin{itemize}
-            	\item[$\Rightarrow$] prüft Kollisionen mit Rand, Wand, Ziel
-            \end{itemize}
+            \item \texttt{Rectangle.intersects()}: prüft Kollisionen mit Rand, Wand, Ziel
         \end{itemize}
  \pause
         \item \textbf{Phase 3 – Ergebnis} 
         \begin{itemize}
             \item \texttt{simulationStoppen(treffer)} -> \texttt{levelWon()}/\texttt{levelLost()}
-            \item \texttt{draw()} zeigt Ergebnis; \texttt{levelInitialisieren()} setzt Level zurück
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -512,7 +509,6 @@ Sie beinhaltet:
         \begin{itemize} 
             \item \texttt{update()} verarbeitet Klicks: Label auswählen, abwählen\\
                   oder Bild zuordnen (\texttt{selectedLabel})
-            \item \texttt{getLabelAtSlot(slot)} gibt aktuell platziertes Label zurück
         \end{itemize}
          \pause
 
