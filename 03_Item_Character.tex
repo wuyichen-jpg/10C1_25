@@ -1,0 +1,193 @@
+\begin{frame}
+	\begin{center}
+		\Huge Item und Charakterdesign
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Spielerfigur}
+	Voraussetzungen für die Spielerfigur:
+	\begin{itemize}
+		\item visuell ansprechend
+		\item Kampffähigkeit
+		\item Inventar
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Implementierung}
+		\begin{itemize}
+			\item Objekt, erweitert BaseObject
+			\item Beinhaltet:
+			\begin{itemize}
+			\item Methodik für die Veränderung der Figur
+			\item Inventar
+			\item Angriff- und Verteidigungsmethoden
+			\item Zeichnen an einer zufälligen Position
+			\end{itemize}
+		\end{itemize}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+		\begin{minipage}[v]{0.3\textwidth}
+		\begin{figure}
+			\includegraphics[width = 3.75 cm]{bilder/PlayerBase.png}
+			\caption{Basis-Sprite der Spielerfigur}
+		\end{figure}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[v]{0.3\textwidth}
+		\begin{figure}
+			\includegraphics[width = 3.75 cm]{bilder/PlayerStandard.png}
+			\caption{Standardspielerfigur}
+		\end{figure}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 10 cm]{bilder/PlayerColourStandard}
+		\caption{Standardfarben werden festgelegt}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+		\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 9 cm]{bilder/PlayerColourInit}
+		\caption{neue Variablen für Farben von Haaren, Hoodie, Hose und Haut werden initialisiert}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 12 cm]{bilder/PlayerColourMap}
+		\caption{mit hashMap werden den Parametern Farben zugewiesen}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 9 cm]{bilder/PlayerColourLoop}
+		\caption{gezählte Wiederholung ersetzt Farben}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+	
+	\begin{minipage}[v]{0.45\textwidth}
+			\begin{figure}	
+				\includegraphics[width = \textwidth]{bilder/PlayerColourSelek1}
+				\caption{Benutzeroberflächen zum Auswählen der Farben}
+		\end{figure}
+	\end{minipage}
+\hfill
+	\begin{minipage}[v]{0.45\textwidth}
+		\begin{figure}
+			\includegraphics[width= \textwidth]{bilder/PlayerColourSelek2}
+		\end{figure}
+	\end{minipage}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+		Aufgaben:
+			\begin{itemize}
+				\item Speichern von Items
+				\item Anzeigen von Name, Anzahl und Level
+			\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	\begin{figure}	
+		\includegraphics[width = 10 cm]{bilder/PlayerInventMap}
+		\caption{Initialisierung des Inventars in PlayerObject}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	\begin{figure}	
+		\includegraphics[width = 10 cm]{bilder/PlayerInventarI}
+		\caption{Methode zum Hinzufügen oder Entfernen von Items}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	\begin{figure}	
+		\includegraphics[width = 10 cm]{bilder/PlayerInventOpen}
+		\caption{Selektion zum öffnen des Inventars}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	InventarScene:
+	\begin{itemize}
+		\item Szene, erweitert BaseScene
+		\item Formale Parameter
+			\begin{itemize}
+				\item Höhe iHight
+				\item Breite iWidth
+				\item Begrenzung nach links iLeft
+				\item Begrenzung nach oben	iTop
+				\item Abstand zwischen den zu zeichnenden Items iPadding
+			\end{itemize}
+		\item Buttons zum Navigieren
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar Funktionsweise}
+		\begin{minipage}[v]{0.45 \textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{bilder/PlayerInventUI.png}
+			\caption[Bioraum]{\newline Inventar mit einem Item}
+		\end{figure}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[v]{0.45 \textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{bilder/inventar.png}
+			\caption[Inforaum]{\newline Inventar mit mehreren Items}
+			\label{fig:Inforaum}
+		\end{figure}
+	\end{minipage}
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Lehrer}
+	Eigenschaften der Lehrer:
+	\begin{itemize}
+		\item eine bestimmte Fachschaft
+		\item zur Fachschaft dazu gehöriges, selbst gepixeltes Bild eines Fachlehrers 
+		\item Angriff- und Verteidigungsfähigkeit
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Items}
+	Was sind Items?
+	\begin{itemize}
+		\item Objekte, die zum Kampf benötigt werden
+		\item Erhalten eines Starter-Items zu Beginn des Spieles, nachdem man sich in eine der fünf Fachschaften eingewählt hat
+		\item Erhalten weiterer Items nach erfolgreichen Abschluss von Minigames
+		\item Speicherung und Zugriff auf alle Items im persönlichen Inventar
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\centering
+	\includegraphics[width = .7 \textwidth]{bilder/ItemType1.png}
+\end{frame}
