@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass{beamer} [10.12.2024]
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
@@ -9,32 +9,19 @@
 \usepackage{amsmath} 
 \usepackage{subfig}
 \usepackage{hyperref}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage{algorithm,algorithmic}
 
 \captionsetup[figure]{labelformat=simple, labelsep=colon}
 \renewcommand\thefigure{\arabic{figure}}
 \setbeamertemplate{caption}[numbered]
 \bibliographystyle{plain} 
 
-\definecolor{sixseven}{rgb}{0.21, 0.67, 0.69}
+\definecolor{lightblue}{rgb}{0.47, 0.47, 0.85}
 
 
 \mode<presentation>{%
-	\usetheme[compress]{Berlin}
-	
-	\setbeamercolor{structure}{fg=sixseven}
-	\setbeamercolor{section in head/foot}{bg=sixseven, fg=white}
-	\setbeamercolor{frametitle}{bg=sixseven, fg=white}
-	
-	\setbeamertemplate{headline}{%
-		\leavevmode%
-		\begin{beamercolorbox}[wd=\paperwidth, ht=2.5ex, dp=1.125ex,
-			leftskip=0.3cm, rightskip=0.3cm]{section in head/foot}%
-			\usebeamerfont{section in head/foot}%
-			\insertsectionnavigationhorizontal{\paperwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}%
-		\end{beamercolorbox}%
-	}
+	\usetheme{Berlin}
+	\setbeamercovered{transparent}
 }
 
 
@@ -75,6 +62,8 @@
 	\section{Spielende}
 	\input{texte/06_Ende.tex}
 
+	\section{Sound}
+	\input{texte/07_Sound.tex}
 
 	
 \section*{}
