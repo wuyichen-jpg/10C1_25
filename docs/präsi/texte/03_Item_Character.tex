@@ -15,27 +15,159 @@
 \end{frame}
 
 \begin{frame}
-	\begin{figure}
-		\centering
-		\includegraphics[width = 0.8 \textwidth]{bilder/PlayerObject_1.png}
-		\caption{Ausschnitt der Klasse \textit{PlayerObject} (Bildschirmfoto des Projektes)}
+	\frametitle{Implementierung}
+		\begin{itemize}
+			\item Objekt, erweitert BaseObject
+			\item Beinhaltet:
+			\begin{itemize}
+			\item Methodik für die Veränderung der Figur
+			\item Inventar
+			\item Angriff- und Verteidigungsmethoden
+			\item Zeichnen an einer zufälligen Position
+			\end{itemize}
+		\end{itemize}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+		\begin{minipage}[v]{0.3\textwidth}
+		\begin{figure}
+			\includegraphics[width = 3.75 cm]{bilder/PlayerBase.png}
+			\caption{Basis-Sprite der Spielerfigur}
+		\end{figure}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[v]{0.3\textwidth}
+		\begin{figure}
+			\includegraphics[width = 3.75 cm]{bilder/PlayerStandard.png}
+			\caption{Standardspielerfigur}
+		\end{figure}
+	\end{minipage}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 10 cm]{bilder/PlayerColourStandard}
+		\caption{Standardfarben werden festgelegt}
 	\end{figure}
 \end{frame}
 
 \begin{frame}
-	\begin{figure}
-		\centering
-		\includegraphics[width = \textwidth]{bilder/PlayerObject_2.png}
-		\caption{Ausschnitt der Klasse \textit{PlayerObject} (Bildschirmfoto des Projektes)}
+		\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 9 cm]{bilder/PlayerColourInit}
+		\caption{neue Variablen für Farben von Haaren, Hoodie, Hose und Haut werden initialisiert}
 	\end{figure}
 \end{frame}
 
 \begin{frame}
-	\begin{figure}
-		\centering
-		\includegraphics[width = \textwidth]{bilder/PlayerObject_3.png}
-		\caption{Ausschnitt der Klasse \textit{PlayerObject} (Bildschirmfoto des Projektes)}
+	\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 12 cm]{bilder/PlayerColourMap}
+		\caption{mit hashMap werden den Parametern Farben zugewiesen}
 	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+	\begin{figure}	
+		\includegraphics[width = 9 cm]{bilder/PlayerColourLoop}
+		\caption{gezählte Wiederholung ersetzt Farben}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Veränderung der Figur}
+	
+	\begin{figure}
+		\begin{minipage}[v]{0.45\textwidth}
+			\begin{figure}	
+				\includegraphics[width = \textwidth]{bilder/PlayerColourSelek1}
+			\end{figure}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[v]{0.45\textwidth}
+			\begin{figure}
+				\includegraphics[width= \textwidth]{bilder/PlayerColourSelek2}
+			\end{figure}
+		\end{minipage}
+		
+		\caption{Benutzeroberflächen zum Auswählen der Farben}
+	\end{figure}
+
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+		Aufgaben:
+			\begin{itemize}
+				\item Speichern von Items
+				\item Anzeigen von Name, Anzahl und Level
+			\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	\begin{figure}	
+		\includegraphics[width = 11cm]{bilder/PlayerInventMap}
+		\caption{Initialisierung des Inventars in PlayerObject}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	\begin{figure}	
+		\includegraphics[width = 10 cm]{bilder/PlayerInventarI}
+		\caption{Methode zum Hinzufügen oder Entfernen von Items}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	\begin{figure}	
+		\includegraphics[width = 10 cm]{bilder/PlayerInventOpen}
+		\caption{Selektion zum öffnen des Inventars}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar}
+	InventarScene:
+	\begin{itemize}
+		\item Szene, erweitert BaseScene
+		\item Formale Parameter
+			\begin{itemize}
+				\item Höhe iHight
+				\item Breite iWidth
+				\item Begrenzung nach links iLeft
+				\item Begrenzung nach oben	iTop
+				\item Abstand zwischen den zu zeichnenden Items iPadding
+			\end{itemize}
+		\item Buttons zum Navigieren
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Inventar Funktionsweise}
+		\begin{minipage}[v]{0.45 \textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{bilder/PlayerInventUI.png}
+			\caption[Bioraum]{\newline Inventar mit einem Item}
+		\end{figure}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[v]{0.45 \textwidth}
+		\begin{figure}
+			\includegraphics[width=\textwidth]{bilder/inventar.png}
+			\caption[Inforaum]{\newline Inventar mit mehreren Items}
+			\label{fig:Inforaum2}
+		\end{figure}
+	\end{minipage}
+
+	
 \end{frame}
 
 \begin{frame}
@@ -60,10 +192,6 @@
 \end{frame}
 
 \begin{frame}
-	\begin{figure}
-		\begin{center}
-			\includegraphics[width = \textwidth]{bilder/ItemType1.png}
-			\caption{Ausschnitt der Klasse \textit{ItemType} (Bildschirmfoto des Projektes)}
-		\end{center}
-	\end{figure}
+	\centering
+	\includegraphics[width = .7 \textwidth]{bilder/ItemType1.png}
 \end{frame}
