@@ -16,7 +16,7 @@ import static czg.MainWindow.*;
 
 public class EndScene extends BaseScene {
 
-    public int veryImportantTimer = 15 * FPS;
+    public int veryImportantTimer = 10 * 60 * FPS;
     private BaseSound someSound = null;
     private int otherTimer = -1;
 
