@@ -2,8 +2,10 @@ package czg.minigame;
 
 import czg.util.Images;
 
+//Datenbank für das Biologie Minigame
 public class BiologyData {
 
+    //Pool mit 8 Pflanzen für Level 1
     public static final BiologyPlant[] LEVEL_1_PLANTS = {new BiologyPlant(Images.get("/assets/minigames/biology/level1/Breitwegerich.jpg"), "Breitwegerich"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level1/Gartentulpe.jpg"), "Gartentulpe"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level1/GoldKrokus.jpg"), "Goldkrokus"),
@@ -12,7 +14,7 @@ public class BiologyData {
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level1/Spitzahorn.jpg"), "Spitzahorn"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level1/Stieleiche.jpg"), "Stieleiche"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level1/EchteWalnuss.jpg"), "Echte Walnuss")};
-
+    //Pool mit 10 Pflanzen für Level 2
     public static final BiologyPlant[] LEVEL_2_PLANTS = {new BiologyPlant(Images.get("/assets/minigames/biology/level2/Bergahorn.jpg"), "Bergahorn"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level2/Buchsbaum.jpg"), "Buchsbaum"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level2/Eberesche.jpg"), "Eberesche"),
@@ -23,7 +25,7 @@ public class BiologyData {
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level2/Quitte.jpg"), "Quitte"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level2/Rotbuche.jpg"), "Rotbuche"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level2/Winterling.jpg"), "Winterling")};
-
+    //Pool mit 12 Pflanzen für Level 3
     public static final BiologyPlant[] LEVEL_3_PLANTS = {new BiologyPlant(Images.get("/assets/minigames/biology/level3/AbendlaendischerLebensbaum.jpg"), "Abendländischer Lebensbaum"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/Beberitze.jpg"), "Gewöhnliche Beberitze"),
                                                          new BiologyPlant(Images.get("/assets/minigames/biology/level3/GemeinerLiguster.jpg"), "Gemeiner Liguster"),

@@ -15,6 +15,7 @@ import java.util.List;
 
 import static czg.MainWindow.PIXEL_SCALE;
 
+//extended LevelScene, die das Biologie Minigame verwaltet
 public class BiologyLevelScene extends LevelScene {
 
     private BiologyLabelObject selectedLabel = null;
@@ -23,7 +24,7 @@ public class BiologyLevelScene extends LevelScene {
     int[] imageY = {17, 17, 17, 17};
     private List<BiologyPlant> chosen;
 
-
+    //Auswahl des Pools an Pflanzen, Levelabhängig
     public BiologyLevelScene(int level) {
         super(Department.BIOLOGY, level);
 
@@ -38,12 +39,14 @@ public class BiologyLevelScene extends LevelScene {
             pool = BiologyData.LEVEL_3_PLANTS;
             level = 3;
         }
-
+        
+        //Pflanzen Pool mischen, darauf vier Pflanzen auswählen 
         List<BiologyPlant> shuffled = new ArrayList<>(Arrays.asList(pool));
         Collections.shuffle(shuffled);
         chosen = shuffled.subList(0, 4);
         List<BiologyPlant> remaining = shuffled.subList(4, shuffled.size());
 
+        //falls Level2/3 aus remaining Ablenkungslabel wählen
         List<String> labels = new ArrayList<>();
         for (BiologyPlant plant : chosen) {
             labels.add(plant.name);
@@ -56,6 +59,7 @@ public class BiologyLevelScene extends LevelScene {
         }
         Collections.shuffle(labels);
 
+        //Bilder der Pflanzen auf 49x49 Pixel zuschneiden + mittiger Ausschnitt
         for (int i = 0; i < 4; i++) {
             int slotW = 49;
             int slotH = 49;
@@ -80,11 +84,13 @@ public class BiologyLevelScene extends LevelScene {
             BaseObject plantImage = new BaseObject(cropped, imageX[i] * PIXEL_SCALE, imageY[i] * PIXEL_SCALE);
             plantImage.width = cropW * PIXEL_SCALE;
             plantImage.height = cropH * PIXEL_SCALE;
+            //imagePlaceholder über/auf Bilder plazieren
             imagePlaceholders[i] = plantImage;
             objects.add(plantImage);
         }
 
-
+        
+        //Label plazieren und hinzufügen
         for (int i = 0; i < labels.size(); i++) {
             int col = i % 3;
             int row = i / 3;
@@ -116,7 +122,8 @@ public class BiologyLevelScene extends LevelScene {
     @Override
     public void update() {
         super.update();
-
+        
+        //Label über KLick auswählen
         if (selectedLabel == null) {
             for (BaseObject obj : objects) {
                 if (obj instanceof BiologyLabelObject label) {
@@ -132,7 +139,8 @@ public class BiologyLevelScene extends LevelScene {
                 selectedLabel = null;
                 return;
             }
-
+            
+            //Klick auf Bilder bzw. Placeholder prüfen
             for (int i = 0; i < 4; i++) {
                 if (imagePlaceholders[i].isClicked()) {
                     BiologyLabelObject existing = getLabelAtSlot(i);
@@ -151,6 +159,7 @@ public class BiologyLevelScene extends LevelScene {
                     selectedLabel.y = 71 * PIXEL_SCALE;
                     selectedLabel.selected = false;
                     selectedLabel = null;
+                    //nach jedem Zuordnen prüfen ob 4 Label plaziert, falls ja Gewinnbedingung prüfen
                     if (allPlaced()) {
                         if (checkWin()) {
                             levelWon();
@@ -163,6 +172,7 @@ public class BiologyLevelScene extends LevelScene {
             }
         }
 }
+   //Gewinnbedingungen
     private boolean checkWin() {
         for (int i = 0; i < 4; i++) {
             boolean found = false;
@@ -180,6 +190,8 @@ public class BiologyLevelScene extends LevelScene {
         }
         return true;
     }
+    
+    //allPlaced, jedem Bild ein Label zugeordnet
     private boolean allPlaced() {
         for (int i = 0; i < 4; i++) {
             boolean found = false;
@@ -195,6 +207,7 @@ public class BiologyLevelScene extends LevelScene {
         return true;
     }
 
+//Zeichnen der Überschrift, sowie Erklärtext
 @Override
 public void draw(Graphics2D g2) {
     super.draw(g2);
