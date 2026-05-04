@@ -40,6 +40,7 @@ public enum ItemType {
     THERMOMETER("Thermometer", "/assets/items/thermometer.png", 1),
     VIRUS("Virus", "/assets/items/virus.png", 0),
     WLAN("Wlan", "/assets/items/wlan.png", 0),
+    PÄDAGOGIK("Pädagogik", "/assets/characters/a_certain_someone.pngwirirtr", Integer.MAX_VALUE),
     WUNDERKERZE("Wunderkerze", "/assets/items/wunderkerze.png", 1),
     ZETTEL("Zettel", "/assets/items/zettel.png", 1),
     ZIRKEL("Zirkel", "/assets/items/zirkel.png", 0),

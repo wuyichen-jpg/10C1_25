@@ -2,10 +2,7 @@ package czg.util;
 
 import czg.objects.ItemType;
 import czg.objects.PlayerObject;
-import czg.scenes.BaseScene;
-import czg.scenes.InventarScene;
-import czg.scenes.KampfScene;
-import czg.scenes.SceneStack;
+import czg.scenes.*;
 import czg.util.character_creator.SaveAndLoad;
 
 import java.io.File;
@@ -30,6 +27,11 @@ public class Console {
                     PlayerObject.INSTANCE.addItem(ItemType.TEXT);
                     PlayerObject.INSTANCE.addItem(ItemType.PAPIER);
                     InventarScene.rebuild();
+                }
+                case "nothingtoseehere" -> {
+                    if(SceneStack.INSTANCE.getTop() instanceof EndScene end) {
+                        end.veryImportantTimer = 0;
+                    }
                 }
                 case "clear" -> {
                     PlayerObject.INSTANCE.inventar.clear();
