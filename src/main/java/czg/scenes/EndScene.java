@@ -16,7 +16,7 @@ import static czg.MainWindow.*;
 
 public class EndScene extends BaseScene {
 
-    public int veryImportantTimer = 10 * 60 * FPS;
+    public int veryImportantTimer = 15 * FPS;
     private BaseSound someSound = null;
     private int otherTimer = -1;
 
@@ -52,7 +52,7 @@ public class EndScene extends BaseScene {
             new StreamSound("/assets/sound/fight_intro.ogg", true, EndOfFileBehaviour.STOP);
             BaseObject someone = new BaseObject(Images.get("/assets/characters/a_certain_someone.png"), 120 * PIXEL_SCALE, 67 * PIXEL_SCALE);
             objects.add(someone);
-            objects.add(new ItemObject(ItemType.PÄDAGOGIK, 67, someone.x - 10 * PIXEL_SCALE, someone.y + someone.height / 2));
+            objects.add(new ItemObject(ItemType.SCHLÜSSELANHÄNGERDINGS, 67, someone.x - 10 * PIXEL_SCALE, someone.y + someone.height / 2));
             otherTimer = 4 * FPS;
         }
 
