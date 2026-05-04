@@ -6,17 +6,20 @@ import czg.util.Draw;
 
 import java.awt.*;
 
+//Ein Label als BaseObject
 public class BiologyLabelObject extends BaseObject {
 
     public String name;
     public boolean selected;
 
+    //name des Labels und by default immer laber nicht selected bei Levelstart
     public BiologyLabelObject(String name, int x, int y, int width, int height) {
         super(null, x, y, width, height);
         this.name = name;
         this.selected = false;
     }
 
+    //Zeichnen des Labels, Füllfarbe abhängig von Status selected (falls true, dann grau, bei false weiß)
     @Override
     public void draw(Graphics2D g) {
         if (selected) {

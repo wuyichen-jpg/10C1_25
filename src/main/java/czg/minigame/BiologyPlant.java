@@ -2,6 +2,7 @@ package czg.minigame;
 
 import java.awt.*;
 
+//Eine einzelne Pflanzen, Bild + Name
 public class BiologyPlant {
     public final Image image;
     public final String name;
